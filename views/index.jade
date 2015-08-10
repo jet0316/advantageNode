@@ -1,6 +1,11 @@
 extends layout
 
 block content
-	h1 Advantage Screen Print
+	//- This is just a sample view rendered by our index controller.
+	h1 Private Section
 
-	div(ng-view)
+	//- Print the currently logged-in user's name
+	h4 Welcome, #{user.username}!
+
+	//- Give users a link to log out of their account
+	p: a(href="/auth/logout") Log out

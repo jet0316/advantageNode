@@ -166,11 +166,13 @@ $(document).on('ready', function(){
 
 		// console.log(myArr)
 
-	})
+	});
 	
 	$('.colors-container').on('change', '.colors', function(){
 		// console.log($(this))
 		var colorClass = colorArr.unshift($(this).val())
 		colorArr.pop()
 		console.log(colorArr)
-	})
+	});
+
+});
