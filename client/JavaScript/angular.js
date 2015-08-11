@@ -1,22 +1,43 @@
-var angular = angular.module('angular', ['ngResource', 'ngRoute']);
+var master = angular.module('master', ['ngResource', 'ngRoute']);
 
-angular.config(function($routeProvider){
-		$routeProvider
-			.when('/', {
-				templateUrl : '/templates/quotes',
-				controller  : 'quote'
-			})
+master.config(function($routeProvider){
+
+	$routeProvider
+		.when('/', {
+			templateUrl : '/templates/home',
+			controller  : 'profile'
+		})
+
+	$routeProvider
+		.when('/login', {
+			templateUrl : '/templates/login',
+			controller  : 'profile'
+		})
+
+	$routeProvider
+		.when('/user', {
+			templateUrl : '/templates/profile',
+			controller  : 'profile'
+		})
 });
 
-angular.factory('quoteFactory', function($resource){
-	var model = $resource('/api/quotes/:id', {id : '@_id'})
+master.factory('userFactory', function($http, $resource){
+	var model = $resource('/api/user/:id', {id : '@_id'})
+	// var user = $http.get('/api/user')
 
 	return {
 		model  : model,
-		quotes : model.query()
+		users 	: model.get()
 	}
 });
 
-angular.controller('quote', function($scope, quoteFactory){
+master.controller('profile', function($scope, userFactory){
+	$scope.user = userFactory.users
+
+	$scope.newuser = function(){
+		var newProfile = new userFactory.model(this.newUser);
+
+		newProfile.$save()
+	}
 
 });

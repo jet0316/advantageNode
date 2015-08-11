@@ -1,0 +1,14 @@
+h3 Existing Users
+form(ng-submit="login()")
+	input(type="text", name="username", placeholder="Username")
+	input(type="password", name="password", placeholder="Password")
+	input(type="submit")
+
+	//- Form for allowing new users to register.
+h3 Register
+form(ng-submit="newuser()")
+	input(type="text", ng-model="newUser.username", placeholder="Username")
+	input(type="email", ng-model="newUser.email", placeholder="Email")
+	input(type="password", ng-model="newUser.password", placeholder="Password")
+	input(type="number", ng-model="newUser.phonenumber", placeholder="Phone number")
+	input(type="submit")

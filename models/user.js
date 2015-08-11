@@ -9,24 +9,37 @@ var bcrypt = require('bcrypt');
  * saving if a duplicate entry is found.
  */
 var userSchema = mongoose.Schema({
-  username: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  password: {
-    type: String,
-    required: true
-  },
-    phoneNumber: {
-    type: Number,
-    required: true
-  }
+	firstname: {
+		type: String,
+		required: true
+	},
+	lastname: {
+		type: String,
+		required: true
+	},
+ 	username: {
+		type: String,
+		required: true,
+		unique: true
+ 	 },
+  	email: {
+		type: String,
+		required: true,
+		unique: true
+  	},
+  	password: {
+		type: String,
+		required: true
+  	},
+	phonenumber: {
+		type: Number,
+		required: true,
+		unique: true
+  	},
+  	admin: {
+  		type: Boolean,
+  		default: false
+  	},
 });
 
 /**
@@ -47,22 +60,22 @@ userSchema.pre('save', function(next){
   // like "secretpasswordsecret" and then encrypting that result.
   bcrypt.genSalt(10, function(err, salt){
 
-    // If there was an error, allow execution to move to the next middleware
-    if(err) return next(err);
+	// If there was an error, allow execution to move to the next middleware
+	if(err) return next(err);
 
-    // If we are successful, use the salt to run the encryption on the given password
-    bcrypt.hash(user.password, salt, function(err, hash){
+	// If we are successful, use the salt to run the encryption on the given password
+	bcrypt.hash(user.password, salt, function(err, hash){
 
-      // If there was an error, allow execution to move to the next middleware
-      if(err) return next(err);
+	  // If there was an error, allow execution to move to the next middleware
+	  if(err) return next(err);
 
-      // If the encryption succeeded, then replace the un-encrypted password
-      // in the given document with the newly encrypted one.
-      user.password = hash;
+	  // If the encryption succeeded, then replace the un-encrypted password
+	  // in the given document with the newly encrypted one.
+	  user.password = hash;
 
-      // Allow execution to move to the next middleware
-      return next();
-    });
+	  // Allow execution to move to the next middleware
+	  return next();
+	});
   });
 });
 
@@ -77,12 +90,12 @@ userSchema.pre('save', function(next){
 userSchema.methods.comparePassword = function(candidatePassword, next){
   // Use bcrypt to compare the unencrypted value to the encrypted one in the DB
   bcrypt.compare(candidatePassword, this.password, function(err, isMatch){
-    // If there was an error, allow execution to move to the next middleware
-    if(err) return next(err);
+	// If there was an error, allow execution to move to the next middleware
+	if(err) return next(err);
 
-    // If there is no error, move to the next middleware and inform
-    // it of the match status (true or false)
-    return next(null, isMatch);
+	// If there is no error, move to the next middleware and inform
+	// it of the match status (true or false)
+	return next(null, isMatch);
   });
 };
 

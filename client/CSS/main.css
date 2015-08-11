@@ -1,0 +1,44 @@
+/* Index CSS */
+@import url(http://fonts.googleapis.com/css?family=Lato:400,300,700);
+
+body{
+	font-family: 'Lato', sans-serif;
+
+}
+
+.header{
+	text-align: center;
+	color: white;
+	height:100vh;
+	background-color: white;
+}
+
+.main-title{
+	font-weight: 300;
+	font-size: 6em;
+	padding-top: 20%;
+}
+
+.sub-title{
+	font-weight: 300;
+	font-size: 1.3em;
+	padding-bottom: 5%;
+}
+
+.intro-btn {
+	padding: 10px 35px;
+	margin: 0px 10px;
+}
+
+.btn-outline-inverse {
+    color: #fff;
+    background-color: transparent;
+    border-color: #fff;
+}
+
+.btn-outline-inverse:active, .btn-outline-inverse:focus, .btn-outline-inverse:hover {
+    color: #E84B4F;
+    text-shadow: none;
+    background-color: #fff;
+    border-color: #fff;
+}
