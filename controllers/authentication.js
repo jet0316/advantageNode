@@ -64,7 +64,7 @@ var authenticationController = {
 			// to that handler.
 			if(!user) {
 				req.flash('error', 'Error logging in. Please try again.');
-				return res.send({err});
+				return res.send({err: 'Error'});
 			}
 			
 			// If we make it this far, the user has correctly authenticated with passport

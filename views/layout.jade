@@ -17,15 +17,23 @@ html(lang='en', ng-app="master")
 							ul.nav.navbar-left
 								li
 									a.navbar-brand(href="/")
-							ul.nav.navbar-nav.navbar-right
+							ul.nav.navbar-nav.navbar-right(ng-controller="user")
 								li
 									a(href="#/") HOME
 								li
 									a(href="#/about") ABOUT
 								li
 									a(href="#/contact") CONTACT US
-								li
-									a(href="#/login") LOG IN/SIGN UP
+								if user
+									li
+										a(href="#/quotes") QUOTES
+									li
+										a(href="#/user/" + user.username) ACCOUNT
+									li
+										a(href="#/logout") LOGOUT
+								else
+									li
+										a(href="#/login") LOG IN/SIGN UP
 		block content
 		
 

@@ -45,6 +45,7 @@ app.get('/logout', authenticationController.logout);
 
 
 app.get('/templates/:templatename', function(req, res){
+	console.log(req.params.templatename)
 	res.render('templates/' + req.params.templatename)
 })
 

@@ -11,9 +11,13 @@ master.config(function($routeProvider){
 			templateUrl : '/templates/login',
 			controller  : 'profile'
 		})
-		.when('/user', {
+		.when('/user/:profileID', {
 			templateUrl : '/templates/profile',
 			controller  : 'user'
+		})
+		.when('/quotes', {
+			templateUrl : '/templates/quotes',
+			controller  : 'quotes'
 		})
 });
 
@@ -33,18 +37,24 @@ master.controller('home', function($scope, $http, $resource){
 });
 
 
-master.controller('profile', function($scope, $http, $resource, $location){
+master.controller('profile', function($scope, $http, $resource, $rootScope, $location){
 
-	console.log($scope)
 	
-
+	console.log($scope)
+	$scope.user = $rootScope.user
 	$scope.login = function(){
 
 		$http.post('/login', $scope.user)
 			.then(function(response){
-				console.log(response.data.password)
+				console.log(response.data)
+
+				$rootScope.user = response.data
+				$scope.user = response.data
+
+
+				
 				if(response.data.password){
-					$location.url('/user')
+					$location.url('/user/' + response.data.username)
 				}
 				else{
 					$location.url('/login')
@@ -55,7 +65,8 @@ master.controller('profile', function($scope, $http, $resource, $location){
 	$scope.newuser = function(){
 		$http.post('/signup', $scope.newUser)
 			.then(function(response){
-				$location.url('/user')
+				console.log(response)
+				$location.url('/user/' + response.data.username)
 			})
 	}
 
@@ -68,9 +79,22 @@ master.controller('profile', function($scope, $http, $resource, $location){
 
 });
 
-master.controller('user', function($scope, $http){
+master.controller('user', function($scope, $http, $rootScope){
+	$http.get('/api/user').then(function(response){
+		$rootScope = response.data
+		$scope.user = response.data
+		console.log(response.data, 'user')
+	})
+});
+
+
+master.controller('quotes', function($scope, $http){
+});
+
+master.controller('layout', function($scope, $http){
 	$http.get('/api/user').then(function(response){
 		$scope.user = response.data
+		console.log(response.data, 'layout')
 	})
 });
 
