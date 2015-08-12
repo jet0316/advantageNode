@@ -22,7 +22,7 @@ var performLogin = function(req, res, next, user){
 		if(err) return next(err);
 
 		// Otherwise, send the user to the homepage.
-		return res.redirect('/');
+		return res.send(req.user);
 	});
 };
 
@@ -64,7 +64,7 @@ var authenticationController = {
 			// to that handler.
 			if(!user) {
 				req.flash('error', 'Error logging in. Please try again.');
-				return res.redirect('/login');
+				return res.send({err});
 			}
 			
 			// If we make it this far, the user has correctly authenticated with passport
@@ -92,7 +92,7 @@ var authenticationController = {
 			username: req.body.username,
 			password: req.body.password,
 			email: req.body.email,
-			phoneNumber: req.body.phonenumber
+			phonenumber: req.body.phonenumber
 		});
 
 		// Now that the user is created, we'll attempt to save them to the
@@ -117,7 +117,7 @@ var authenticationController = {
 				// Flash the message and redirect to the login view to
 				// show it.
 				req.flash('error', errorMessage);
-				return res.redirect('/login');
+				return res.send({err: 'Error'});
 			}
 
 			// If we make it this far, we are ready to log the user in.
@@ -132,7 +132,7 @@ var authenticationController = {
 		req.logout();
 
 		// Redirect back to the login page
-		res.redirect('/login');
+		res.redirect('/');
 	}
 };
 

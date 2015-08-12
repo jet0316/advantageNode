@@ -9,30 +9,22 @@ var bcrypt = require('bcrypt');
  * saving if a duplicate entry is found.
  */
 var userSchema = mongoose.Schema({
-	firstname: {
-		type: String,
-		required: true
-	},
-	lastname: {
-		type: String,
-		required: true
-	},
  	username: {
 		type: String,
 		required: true,
 		unique: true
  	 },
+  	password: {
+		type: String,
+		required: true
+  	},
   	email: {
 		type: String,
 		required: true,
 		unique: true
   	},
-  	password: {
-		type: String,
-		required: true
-  	},
 	phonenumber: {
-		type: Number,
+		type: String,
 		required: true,
 		unique: true
   	},

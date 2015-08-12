@@ -2,9 +2,8 @@ var User = require('../models/user');
 
 var apiController = {
 	get: function(req, res){
-		User.findOne({}, function(err, user){
-			res.send(user)
-		});
+		console.log(req.user)
+		res.send(req.user)
 	},
 }
 
