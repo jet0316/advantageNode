@@ -54,6 +54,8 @@ app.get('/', indexController.index);
 
 app.get('/api/user', apiController.get);
 
+app.post('/api/order', apiController.order)
+
 
 app.use(passportConfig.ensureAuthenticated);
 

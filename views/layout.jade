@@ -17,23 +17,24 @@ html(lang='en', ng-app="master")
 							ul.nav.navbar-left
 								li
 									a.navbar-brand(href="/")
-							ul.nav.navbar-nav.navbar-right(ng-controller="user")
+							ul.nav.navbar-nav.navbar-right(ng-controller="navbar")
 								li
 									a(href="#/") HOME
 								li
 									a(href="#/about") ABOUT
 								li
 									a(href="#/contact") CONTACT US
-								if user
-									li
-										a(href="#/quotes") QUOTES
-									li
-										a(href="#/user/" + user.username) ACCOUNT
-									li
-										a(href="#/logout") LOGOUT
-								else
-									li
-										a(href="#/login") LOG IN/SIGN UP
+
+								li(ng-show="!!!user")
+									a(href="#/login") LOG IN/SIGN UP	
+								li(ng-show="user")
+									a(href="#/quotes") QUOTES
+								li(ng-show="!!!user.admin && user")
+									a(href="#/user/{{user.username}}") ACCOUNT
+								li(ng-show="user.admin")
+									a(href="#/admin/{{user.username}}") ACCOUNT
+								li(ng-show="user")
+									a(href="/logout") LOGOUT
 		block content
 		
 

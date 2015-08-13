@@ -13,13 +13,52 @@ master.config(function($routeProvider){
 		})
 		.when('/user/:profileID', {
 			templateUrl : '/templates/profile',
-			controller  : 'user'
+			controller  : 'user',
+				resolve     : {
+				'auth' : function($rootScope){
+					if($rootScope.user){
+						return true
+					}
+					else{
+						$location.path('/')
+					}
+				}
+			}
 		})
 		.when('/quotes', {
 			templateUrl : '/templates/quotes',
-			controller  : 'quotes'
+			controller  : 'quotes',
+			resolve     : {
+				'auth' 	: function($rootScope){
+					if($rootScope.user){
+						return true
+					}
+					else{
+						$location.path('/')
+					}
+				}
+			}
+		})
+		.when('/admin/:adminName', {
+			templateUrl : '/templates/admin',
+			controller  : 'admin',
+				resolve     : {
+				'auth' : function($rootScope){
+					if($rootScope.user.admin){
+						return true
+					}
+					else{
+						$location.path('/')
+					}
+				}
+			}
+		})
+		.otherwise({
+			redirectTo: '/'
 		})
 });
+
+
 
 master.factory('userFactory', function($http, $resource){
 	var model = $resource('/api/user/:id', {id : '@_id'})
@@ -51,10 +90,13 @@ master.controller('profile', function($scope, $http, $resource, $rootScope, $loc
 				$rootScope.user = response.data
 				$scope.user = response.data
 
-
+				console.log($rootScope, 'profile')
 				
-				if(response.data.password){
-					$location.url('/user/' + response.data.username)
+				if(response.data.admin){
+					$location.path('/admin/' + response.data.username)
+				}
+				else if(response.data.password){
+					$location.path('/user/' + response.data.username)
 				}
 				else{
 					$location.url('/login')
@@ -66,7 +108,7 @@ master.controller('profile', function($scope, $http, $resource, $rootScope, $loc
 		$http.post('/signup', $scope.newUser)
 			.then(function(response){
 				console.log(response)
-				$location.url('/user/' + response.data.username)
+				$location.path('/user/' + response.data.username)
 			})
 	}
 
@@ -81,23 +123,139 @@ master.controller('profile', function($scope, $http, $resource, $rootScope, $loc
 
 master.controller('user', function($scope, $http, $rootScope){
 	$http.get('/api/user').then(function(response){
-		$rootScope = response.data
-		$scope.user = response.data
-		console.log(response.data, 'user')
+		$rootScope.user = response.data
+		$scope.user = $rootScope.user 	
+	})
+});
+
+
+master.controller('navbar', function($scope, $http, $rootScope){
+	$http.get('/api/user').then(function(response){
+		$rootScope.user = response.data
+		$rootScope.$on('$stateChangeSuccess', function(){
+			$scope.user = $rootScope.user 
+			
+		})
+		// $scope.$apply(function(){
+
+		// })
 	})
 });
 
 
 master.controller('quotes', function($scope, $http){
+
+	$scope.options = [{name : 1, val : 1}, 
+			{name : 2, 
+				val : 2
+			},
+			{
+				name : 3, 
+				val : 3
+			},
+			{
+				name : 4, 
+				val : 4
+			},
+			{
+				name : 5, 
+				val : 5
+			},
+			{
+				name : 6, 
+				val : 6
+			},
+			{
+				name : 7, 
+				val : 7
+			},
+		]
+	$scope.locations = 1
+
+	$scope.colorNumber = [
+			{
+				name : 1, 
+				val : 1
+			}, 
+			{
+				name : 2, 
+				val : 2
+			},
+			{
+				name : 3, 
+				val : 3
+			},
+			{
+				name : 4, 
+				val : 4
+			},
+			{
+				name : 5, 
+				val : 5
+			},
+			{
+				name : 6, 
+				val : 6
+			},
+			{
+				name : 7, 
+				val : 7
+			},
+		]
+	$scope.colors = 1
+
+	$scope.locationName = [
+			{
+				name : 1, 
+				val : 1
+			}, 
+			{
+				name : 2, 
+				val : 2
+			},
+			{
+				name : 3, 
+				val : 3
+			},
+			{
+				name : 4, 
+				val : 4
+			},
+			{
+				name : 5, 
+				val : 5
+			},
+			{
+				name : 6, 
+				val : 6
+			},
+			{
+				name : 7, 
+				val : 7
+			},
+		]
+	$scope.print = 1
+
+
+	$http.post('/api/order').then(function(response){
+		scope.user = response.data
+	});
 });
 
 master.controller('layout', function($scope, $http){
-	$http.get('/api/user').then(function(response){
-		$scope.user = response.data
-		console.log(response.data, 'layout')
+
+	$scope.newOrder = function(){
+		$http.get('/api/user').then(function(response){
+			$scope.user = response.data
+			console.log(response.data, 'layout')
 	})
+
+	}
 });
 
+master.controller('admin', function($scope, $http){
+
+});
 
 
 
