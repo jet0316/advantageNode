@@ -1,18 +1,15 @@
 var User = require('../models/user');
-var Order = require('../models/order');
+var Quote = require('../models/quote');
 
 var apiController = {
 	getUser: function(req, res){
 		console.log(req.user)
 		res.send(req.user)
 	},
-	placeOrder: function(req, res){
-		var newOrder = new Order({
-			name: req.body.name,
-			shirts: Number,
-			locations: Number,
-			colors: Number,
-			userID: req.user._id
+	createLocation: function(req, res){
+		var newQuore = new Quote.locations({
+			colors  : [Number],
+			artfile : 
 		});
 
 
@@ -25,16 +22,24 @@ var apiController = {
 			}
 		})
 	},
+
+	createQuote: function(req, res){
+
+	},
+
 	getUserOrder: function(req, res){
 		Order.findOne({}, function(err, orders){
 			res.send(orders)
 		})
 	},
+
 	getOrder: function(req, res){
-		Order.find({}, function(err, orders){
-			res.send(orders)
+		Order.find({username : req.params.userID}).populate('quote user').exec(function(err, response){
+			res.send(response)
 		})
+		
 	},
+
 }
 
 module.exports = apiController;

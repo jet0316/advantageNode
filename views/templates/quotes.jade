@@ -1,9 +1,9 @@
 .container
 	h4 Get a quote!
-	form(ng-submit="newOrder()")
+	form(ng-submit="newQuote()")
 		div(class="form-group")
 			label Job Name
-			input(ng-model="quote.name", ) 
+			input(ng-model="quote.name") 
 			label How many shirts:
 			input(ng-model="quote.shirts", class="form-control shirts" placeholder="Number of shirts")
 
@@ -12,18 +12,20 @@
 				input(ng-model="quote.cotton", type="checkbox")
 		div
 			label How many print locations:
-				select(ng-model="quote.locations", ng-options="option.val as option.name for option in {{options}}")
+				select(ng-change="", ng-model="locations", ng-options="option.val as option.name for option in options")
+
 				
-		div(ng-repeat="option in options | limitTo:quote.locations")
-			hr
+		div(ng-repeat="location in locationList | limitTo:locations")
 			div(class="form-group")
-				//- label How many colors:
-				//- select(class="colors", ng-model="quote.colors", ng-options="option.val as option.name for option in {{colorNumber}}")
-				//- label Location
-				//- select(ng-model="quote.print", ng-options="option.val as option.name for option in {{printLocations}}")
-				input(type="form control")
+				label How many colors:
+				select(ng-init="location.colors = options[0].val", class="colors", ng-model="location.colors", ng-options="option.val as option.name for option in colorNumber")
+				div(ng-repeat="color in colorNumber | limitTo:location.colors")
+					label pms color:
+						input(ng-model="location.color")
+				label Location
+				select(ng-model="location.print", ng-options="option.name as option.name for option in locationName")
 				label Upload art files
-				input(type="file", ng-model="quote.art")
+				input(type="file", ng-model="location.art")
 			hr
 
 		div
@@ -33,7 +35,10 @@
 
 							
 	.total-container
-		p Total
+		p(ng-show="quote.shirts") Shirts: {{quote.shirts}}
+		div(ng-repeat="location in locationList | limitTo:locations") 
+			p Location: {{location.print}}
+			p {{locationList}}
 
 	div
 		p * Quotes are only for print price, if you would like to order shirts go 

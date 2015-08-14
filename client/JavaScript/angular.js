@@ -28,16 +28,16 @@ master.config(function($routeProvider){
 		.when('/quotes', {
 			templateUrl : '/templates/quotes',
 			controller  : 'quotes',
-			resolve     : {
-				'auth'	: function($rootScope){
-					if($rootScope.user){
-						return true
-					}
-					else{
-						$location.path('/')
-					}
-				}
-			}
+			// resolve     : {
+			// 	'auth'	: function($rootScope){
+			// 		if($rootScope.user){
+			// 			return true
+			// 		}
+			// 		else{
+			// 			$location.path('/')
+			// 		}
+			// 	}
+			// }
 		})
 		.when('/admin/:adminName', {
 			templateUrl : '/templates/admin',
@@ -99,7 +99,7 @@ master.controller('profile', function($scope, $http, $resource, $rootScope, $loc
 		$http.post('/signup', $scope.newUser)
 			.then(function(response){
 				console.log(response)
-				$location.path('/user/' + response.data.username)
+				$location.url('/user/' + response.data.username)
 			})
 	}
 
@@ -115,7 +115,7 @@ master.controller('profile', function($scope, $http, $resource, $rootScope, $loc
 master.controller('user', function($scope, $http, $rootScope){
 	$http.get('/api/user').then(function(response){
 		$rootScope.user = response.data
-		$scope.user = $rootScope.user 	
+		$scope.user = $rootScope.user
 	})
 });
 
@@ -135,7 +135,7 @@ master.controller('navbar', function($scope, $http, $rootScope){
 
 
 master.factory('orderFactory', function($http, $resource){
-	var model = $resource('/api/getUserOrder')
+	var model = $resource('/api/user')
 	
 
 	return {
@@ -147,96 +147,49 @@ master.factory('orderFactory', function($http, $resource){
 master.controller('quotes', function($scope, $http, orderFactory){
 
 	$scope.options = [{name : 1, val : 1}, 
-			{name : 2, 
-				val : 2
-			},
-			{
-				name : 3, 
-				val : 3
-			},
-			{
-				name : 4, 
-				val : 4
-			},
-			{
-				name : 5, 
-				val : 5
-			},
-			{
-				name : 6, 
-				val : 6
-			},
-			{
-				name : 7, 
-				val : 7
-			},
-		]
+					{name : 2, val : 2},
+					{name : 3, val : 3},
+					{name : 4, val : 4},
+					{name : 5, val : 5},
+					{name : 6, val : 6},
+					{name : 7, val : 7},
+					]
 	$scope.locations = 1
 
-	// $scope.colorNumber = [
-	// 		{
-	// 			name : 1, 
-	// 			val : 1
-	// 		}, 
-	// 		{
-	// 			name : 2, 
-	// 			val : 2
-	// 		},
-	// 		{
-	// 			name : 3, 
-	// 			val : 3
-	// 		},
-	// 		{
-	// 			name : 4, 
-	// 			val : 4
-	// 		},
-	// 		{
-	// 			name : 5, 
-	// 			val : 5
-	// 		},
-	// 		{
-	// 			name : 6, 
-	// 			val : 6
-	// 		},
-	// 		{
-	// 			name : 7, 
-	// 			val : 7
-	// 		},
-	// 	]
-	// $scope.colors = 1
 
-	// $scope.locationName = [
-	// 		{
-	// 			name : 1, 
-	// 			val : 1
-	// 		}, 
-	// 		{
-	// 			name : 2, 
-	// 			val : 2
-	// 		},
-	// 		{
-	// 			name : 3, 
-	// 			val : 3
-	// 		},
-	// 		{
-	// 			name : 4, 
-	// 			val : 4
-	// 		},
-	// 		{
-	// 			name : 5, 
-	// 			val : 5
-	// 		},
-	// 		{
-	// 			name : 6, 
-	// 			val : 6
-	// 		},
-	// 		{
-	// 			name : 7, 
-	// 			val : 7
-	// 		},
-		// ]
-	// $scope.print = 1
 
+	
+
+	$scope.colorNumber = [{name : 1, val : 1}, 
+						{name : 2, val : 2},
+						{name : 3, val : 3},
+						{name : 4, val : 4},
+						{name : 5, val : 5},
+						{name : 6, val : 6},
+						{name : 7, val : 7},
+						{name : 8, val : 8},
+						{name : 9, val : 9},
+						]
+	$scope.colors = 1
+
+	$scope.locationName = [{name : 'Front'}, 
+						{name : 'Back'},
+						{name : 'Left Chest'},
+						{name : 'Right Chest'},
+						{name : 'Left Sleeve'},
+						{name : 'Right Sleeve'},
+						{name : 'Back Tag'},
+						]
+	
+
+	$scope.locationList = [{},{},{},{},{},{},{}]
+	$scope.newQuote = function(){
+		$scope.newLocation = function(){
+
+		}
+		console.log($scope.locationList)
+
+	}
 
 	// $http.get('/api/getUserOrder').then(function(response){
 	// 	scope.order = response.data
@@ -245,12 +198,12 @@ master.controller('quotes', function($scope, $http, orderFactory){
 	// var newCryptAnimal = new orderFactory.model(this.newAnimal);
 
 
-	$scope.dataID = function(){
+	// $scope.dataID = function(){
 
-		$scope.locationId++
-		// $scope.locationId = 0
-		console.log($scope.locationId)
-	}
+	// 	$scope.locationId++
+	// 	// $scope.locationId = 0
+	// 	console.log($scope.locationId)
+	// }
 });
 
 master.controller('layout', function($scope, $http){
@@ -258,7 +211,6 @@ master.controller('layout', function($scope, $http){
 	$scope.newOrder = function(){
 		$http.get('/api/user').then(function(response){
 			$scope.user = response.data
-			console.log(response.data, 'layout')
 	})
 
 	}

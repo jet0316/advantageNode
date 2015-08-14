@@ -52,11 +52,11 @@ app.get('/templates/:templatename', function(req, res){
 
 app.get('/api/user', apiController.getUser);
 
-app.post('/api/placeOorder', apiController.placeOrder)
+// app.post('/api/placeOrder', apiController.placeOrder)
 
-app.get('/api/getUserOrder', apiController.getUserOrder);
+// app.get('/api/getUserOrder', apiController.getUserOrder);
 
-app.get('/api/getOrder', apiController.getOrder);
+// app.get('/api/getOrder', apiController.getOrder);
 
 
 app.use(passportConfig.ensureAuthenticated);
