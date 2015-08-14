@@ -14,8 +14,8 @@ master.config(function($routeProvider){
 		.when('/user/:profileID', {
 			templateUrl : '/templates/profile',
 			controller  : 'user',
-				resolve     : {
-				'auth' : function($rootScope){
+			resolve     : {
+				'auth'  : function($rootScope){
 					if($rootScope.user){
 						return true
 					}
@@ -29,7 +29,7 @@ master.config(function($routeProvider){
 			templateUrl : '/templates/quotes',
 			controller  : 'quotes',
 			resolve     : {
-				'auth' 	: function($rootScope){
+				'auth'	: function($rootScope){
 					if($rootScope.user){
 						return true
 					}
@@ -42,8 +42,8 @@ master.config(function($routeProvider){
 		.when('/admin/:adminName', {
 			templateUrl : '/templates/admin',
 			controller  : 'admin',
-				resolve     : {
-				'auth' : function($rootScope){
+			resolve     : {
+				'auth'  : function($rootScope){
 					if($rootScope.user.admin){
 						return true
 					}
@@ -60,15 +60,6 @@ master.config(function($routeProvider){
 
 
 
-master.factory('userFactory', function($http, $resource){
-	var model = $resource('/api/user/:id', {id : '@_id'})
-	
-
-	return {
-		model   : model,
-		users 	: model.get()
-	}
-});
 
 
 master.controller('home', function($scope, $http, $resource){
@@ -96,7 +87,7 @@ master.controller('profile', function($scope, $http, $resource, $rootScope, $loc
 					$location.path('/admin/' + response.data.username)
 				}
 				else if(response.data.password){
-					$location.path('/user/' + response.data.username)
+					$location.url('/user/' + response.data.username)
 				}
 				else{
 					$location.url('/login')
@@ -143,7 +134,17 @@ master.controller('navbar', function($scope, $http, $rootScope){
 });
 
 
-master.controller('quotes', function($scope, $http){
+master.factory('orderFactory', function($http, $resource){
+	var model = $resource('/api/getUserOrder')
+	
+
+	return {
+		model   : model,
+		users 	: model.get()
+	}
+});
+
+master.controller('quotes', function($scope, $http, orderFactory){
 
 	$scope.options = [{name : 1, val : 1}, 
 			{name : 2, 
@@ -172,74 +173,84 @@ master.controller('quotes', function($scope, $http){
 		]
 	$scope.locations = 1
 
-	$scope.colorNumber = [
-			{
-				name : 1, 
-				val : 1
-			}, 
-			{
-				name : 2, 
-				val : 2
-			},
-			{
-				name : 3, 
-				val : 3
-			},
-			{
-				name : 4, 
-				val : 4
-			},
-			{
-				name : 5, 
-				val : 5
-			},
-			{
-				name : 6, 
-				val : 6
-			},
-			{
-				name : 7, 
-				val : 7
-			},
-		]
-	$scope.colors = 1
+	// $scope.colorNumber = [
+	// 		{
+	// 			name : 1, 
+	// 			val : 1
+	// 		}, 
+	// 		{
+	// 			name : 2, 
+	// 			val : 2
+	// 		},
+	// 		{
+	// 			name : 3, 
+	// 			val : 3
+	// 		},
+	// 		{
+	// 			name : 4, 
+	// 			val : 4
+	// 		},
+	// 		{
+	// 			name : 5, 
+	// 			val : 5
+	// 		},
+	// 		{
+	// 			name : 6, 
+	// 			val : 6
+	// 		},
+	// 		{
+	// 			name : 7, 
+	// 			val : 7
+	// 		},
+	// 	]
+	// $scope.colors = 1
 
-	$scope.locationName = [
-			{
-				name : 1, 
-				val : 1
-			}, 
-			{
-				name : 2, 
-				val : 2
-			},
-			{
-				name : 3, 
-				val : 3
-			},
-			{
-				name : 4, 
-				val : 4
-			},
-			{
-				name : 5, 
-				val : 5
-			},
-			{
-				name : 6, 
-				val : 6
-			},
-			{
-				name : 7, 
-				val : 7
-			},
-		]
-	$scope.print = 1
+	// $scope.locationName = [
+	// 		{
+	// 			name : 1, 
+	// 			val : 1
+	// 		}, 
+	// 		{
+	// 			name : 2, 
+	// 			val : 2
+	// 		},
+	// 		{
+	// 			name : 3, 
+	// 			val : 3
+	// 		},
+	// 		{
+	// 			name : 4, 
+	// 			val : 4
+	// 		},
+	// 		{
+	// 			name : 5, 
+	// 			val : 5
+	// 		},
+	// 		{
+	// 			name : 6, 
+	// 			val : 6
+	// 		},
+	// 		{
+	// 			name : 7, 
+	// 			val : 7
+	// 		},
+		// ]
+	// $scope.print = 1
 
 
-	$http.post('/api/order').then(function(response){
-		scope.user = response.data
-	});
+	// $http.get('/api/getUserOrder').then(function(response){
+	// 	scope.order = response.data
+	// });
+
+	// var newCryptAnimal = new orderFactory.model(this.newAnimal);
+
+
+	$scope.dataID = function(){
+
+		$scope.locationId++
+		// $scope.locationId = 0
+		console.log($scope.locationId)
+	}
 });
 
 master.controller('layout', function($scope, $http){

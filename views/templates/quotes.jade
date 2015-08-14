@@ -1,8 +1,8 @@
 .container
-	h4 Get a quote!  
+	h4 Get a quote!
 	form(ng-submit="newOrder()")
 		div(class="form-group")
-			label
+			label Job Name
 			input(ng-model="quote.name", ) 
 			label How many shirts:
 			input(ng-model="quote.shirts", class="form-control shirts" placeholder="Number of shirts")
@@ -12,34 +12,28 @@
 				input(ng-model="quote.cotton", type="checkbox")
 		div
 			label How many print locations:
-				select(ng-model="quote.locations", id="number-prints", ng-options="option.val as option.name for option in {{options}}")
+				select(ng-model="quote.locations", ng-options="option.val as option.name for option in {{options}}")
 				
-		div(ng-repeat="option in options | limitTo:locations")
+		div(ng-repeat="option in options | limitTo:quote.locations")
 			hr
 			div(class="form-group")
-				label How many colors:
-				select(class="colors", ng-model="newOrder.colors", ng-options="option.val as option.name for option in {{colorNumber}}")
-				label Location
-				select(ng-model="newOrder.print", ng-options="option.val as option.name for option in {{printLocations}}")
+				//- label How many colors:
+				//- select(class="colors", ng-model="quote.colors", ng-options="option.val as option.name for option in {{colorNumber}}")
+				//- label Location
+				//- select(ng-model="quote.print", ng-options="option.val as option.name for option in {{printLocations}}")
 				input(type="form control")
 				label Upload art files
-				input(type="file")
+				input(type="file", ng-model="quote.art")
 			hr
 
-		hr
-
-		div(class="colors-container")
-
-		hr
-								
-									
 		div
 			button(type="submit" class="btn btn-info submit-button") Get quote!
 									
 		hr
 
 							
-	div(class="total-container")
+	.total-container
+		p Total
 
 	div
 		p * Quotes are only for print price, if you would like to order shirts go 

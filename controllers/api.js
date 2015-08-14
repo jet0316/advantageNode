@@ -2,11 +2,11 @@ var User = require('../models/user');
 var Order = require('../models/order');
 
 var apiController = {
-	get: function(req, res){
+	getUser: function(req, res){
 		console.log(req.user)
 		res.send(req.user)
 	},
-	order: function(req, res){
+	placeOrder: function(req, res){
 		var newOrder = new Order({
 			name: req.body.name,
 			shirts: Number,
@@ -24,7 +24,17 @@ var apiController = {
 				res.send(order)	
 			}
 		})
-	}
+	},
+	getUserOrder: function(req, res){
+		Order.findOne({}, function(err, orders){
+			res.send(orders)
+		})
+	},
+	getOrder: function(req, res){
+		Order.find({}, function(err, orders){
+			res.send(orders)
+		})
+	},
 }
 
 module.exports = apiController;

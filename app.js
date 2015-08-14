@@ -43,18 +43,20 @@ app.post('/signup', authenticationController.processSignup);
 
 app.get('/logout', authenticationController.logout);
 
+app.get('/', indexController.index);
 
 app.get('/templates/:templatename', function(req, res){
 	console.log(req.params.templatename)
 	res.render('templates/' + req.params.templatename)
 })
 
-app.get('/', indexController.index);
+app.get('/api/user', apiController.getUser);
 
+app.post('/api/placeOorder', apiController.placeOrder)
 
-app.get('/api/user', apiController.get);
+app.get('/api/getUserOrder', apiController.getUserOrder);
 
-app.post('/api/order', apiController.order)
+app.get('/api/getOrder', apiController.getOrder);
 
 
 app.use(passportConfig.ensureAuthenticated);
