@@ -1,22 +1,20 @@
 var mongoose = require('mongoose');
 
 var locationsSchema = mongoose.Schema({
-	color        : [Number],
+	colors       : Number,
 	artFile      : String,
 	locationName : String,
-	price		 : Number
-
-
 });
 
 var quoteSchema = mongoose.Schema({
+	name 		: String,
 	shirts      : Number,
 	locations	: [locationsSchema],
-	price		: Number
+	price		: Number,
 	user		: {type : mongoose.Schema.ObjectId, ref : 'user'}
 
 });
 
-var Quotes = mongoose.model('quotes', orderSchema);
+var Quotes = mongoose.model('quotes', quoteSchema);
 
 module.exports = Quotes;

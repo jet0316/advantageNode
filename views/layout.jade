@@ -30,6 +30,8 @@ html(lang='en', ng-app="master")
 								li(ng-show="user")
 									a(href="#/quotes") QUOTES
 								li(ng-show="!!!user.admin && user")
+									a(href="#/cart") CART
+								li(ng-show="!!!user.admin && user")
 									a(href="#/user/{{user.username}}") ACCOUNT
 								li(ng-show="user.admin")
 									a(href="#/admin/{{user.username}}") ACCOUNT

@@ -12,20 +12,20 @@
 				input(ng-model="quote.cotton", type="checkbox")
 		div
 			label How many print locations:
-				select(ng-change="", ng-model="locations", ng-options="option.val as option.name for option in options")
+				select(ng-model="locations", ng-options="option.val as option.name for option in options")
 
 				
-		div(ng-repeat="location in locationList | limitTo:locations")
+		div(ng-repeat="quote in locationList | limitTo:locations")
 			div(class="form-group")
 				label How many colors:
-				select(ng-init="location.colors = options[0].val", class="colors", ng-model="location.colors", ng-options="option.val as option.name for option in colorNumber")
-				div(ng-repeat="color in colorNumber | limitTo:location.colors")
+				select(ng-init="quote.colors = options[0].val", class="colors", ng-model="quote.colors", ng-options="option.val as option.name for option in colorNumber")
+				div(ng-repeat="color in colorNumber | limitTo:quote.colors")
 					label pms color:
-						input(ng-model="location.color")
+						input(ng-model="quote.color")
 				label Location
-				select(ng-model="location.print", ng-options="option.name as option.name for option in locationName")
+				select(ng-model="quote.locationName", ng-options="option.name as option.name for option in locationName")
 				label Upload art files
-				input(type="file", ng-model="location.art")
+				input(type="file", ng-model="quote.art")
 			hr
 
 		div
@@ -36,9 +36,8 @@
 							
 	.total-container
 		p(ng-show="quote.shirts") Shirts: {{quote.shirts}}
-		div(ng-repeat="location in locationList | limitTo:locations") 
-			p Location: {{location.print}}
-			p {{locationList}}
+		p {{locationList}}
+			
 
 	div
 		p * Quotes are only for print price, if you would like to order shirts go 

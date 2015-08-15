@@ -32,7 +32,6 @@ var userSchema = mongoose.Schema({
   		type: Boolean,
   		default: false
   	},
-  	orders: [{type : mongoose.Schema.OrderId, ref : 'orders'}]
 });
 
 /**

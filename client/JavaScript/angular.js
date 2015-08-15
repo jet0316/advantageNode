@@ -53,6 +53,20 @@ master.config(function($routeProvider){
 				}
 			}
 		})
+		.when('/cart', {
+			templateUrl : '/templates/cart',
+			controller  : 'order',
+			resolve     : {
+				'auth'  : function($rootScope){
+					if($rootScope.user){
+						return true
+					}
+					else{
+						$location.path('/')
+					}
+				}
+			}
+		})
 		.otherwise({
 			redirectTo: '/'
 		})
@@ -70,21 +84,20 @@ master.controller('home', function($scope, $http, $resource){
 master.controller('profile', function($scope, $http, $resource, $rootScope, $location){
 
 	
-	console.log($scope)
 	$scope.user = $rootScope.user
 	$scope.login = function(){
 
 		$http.post('/login', $scope.user)
 			.then(function(response){
-				console.log(response.data)
+				
 
 				$rootScope.user = response.data
 				$scope.user = response.data
 
-				console.log($rootScope, 'profile')
+				
 				
 				if(response.data.admin){
-					$location.path('/admin/' + response.data.username)
+					$location.url('/admin/' + response.data.username)
 				}
 				else if(response.data.password){
 					$location.url('/user/' + response.data.username)
@@ -98,7 +111,7 @@ master.controller('profile', function($scope, $http, $resource, $rootScope, $loc
 	$scope.newuser = function(){
 		$http.post('/signup', $scope.newUser)
 			.then(function(response){
-				console.log(response)
+				
 				$location.url('/user/' + response.data.username)
 			})
 	}
@@ -169,6 +182,7 @@ master.controller('quotes', function($scope, $http, orderFactory){
 						{name : 7, val : 7},
 						{name : 8, val : 8},
 						{name : 9, val : 9},
+						{name : 10, val : 10},
 						]
 	$scope.colors = 1
 
@@ -182,12 +196,25 @@ master.controller('quotes', function($scope, $http, orderFactory){
 						]
 	
 
-	$scope.locationList = [{},{},{},{},{},{},{}]
-	$scope.newQuote = function(){
-		$scope.newLocation = function(){
 
-		}
-		console.log($scope.locationList)
+	$scope.locationList = [{},{},{},{},{},{},{}]
+
+
+	$scope.newQuote = function(){
+		$scope.locationArr = []
+		$scope.locationList.forEach(function(element){
+			if(element.colors){
+				$scope.locationArr.push(element)
+				console.log($scope.locationArr)
+			}
+		})
+
+		$scope.quote.locations = $scope.locationArr
+		$http.post('/api/quote', $scope.quote)
+		$scope.quote = {}
+		$scope.locationList = [{},{},{},{},{},{},{}]
+		$scope.colors = 1
+		$scope.locations = 1
 
 	}
 
@@ -217,6 +244,10 @@ master.controller('layout', function($scope, $http){
 });
 
 master.controller('admin', function($scope, $http){
+
+});
+
+master.controller('cart', function($scope, $http, $resource){
 
 });
 

@@ -46,13 +46,13 @@ app.get('/logout', authenticationController.logout);
 app.get('/', indexController.index);
 
 app.get('/templates/:templatename', function(req, res){
-	console.log(req.params.templatename)
+	// console.log(req.params.templatename)
 	res.render('templates/' + req.params.templatename)
 })
 
 app.get('/api/user', apiController.getUser);
 
-// app.post('/api/placeOrder', apiController.placeOrder)
+app.post('/api/quote', apiController.createQuote)
 
 // app.get('/api/getUserOrder', apiController.getUserOrder);
 
