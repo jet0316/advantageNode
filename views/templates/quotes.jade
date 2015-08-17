@@ -2,14 +2,15 @@
 	h4 Get a quote!
 	form(ng-submit="newQuote()")
 		div(class="form-group")
-			label Quote Name:
+			label Job Name:
 			input(ng-model="quote.name") 
 			label How many shirts:
 			input(ng-model="quote.shirts", class="form-control shirts" placeholder="Number of shirts")
+			label Shirt Color
+			input(ng-model="quote.shirtColor", class="form-control shirts" placeholder="Shirt Color")
+			label What kind of shirt?
+			select(ng-model="quote.shirtStyle", ng-options="option.name as option.name for option in shirtStyle")
 
-		div(class="checkbox")
-			label 100 Percent Cotton
-				input(ng-model="quote.cotton", type="checkbox")
 		div
 			label How many print locations:
 				select(ng-model="locations", ng-options="option.val as option.name for option in options")
@@ -19,9 +20,9 @@
 			div(class="form-group")
 				label How many colors:
 				select(ng-init="quote.colors = options[0].val", class="colors", ng-model="quote.colors", ng-options="option.val as option.name for option in colorNumber")
-				div(ng-repeat="color in colorNumber | limitTo:quote.colors")
-					label pms color:
-						input(ng-model="quote.color")
+				div(ng-model="quote.printColor", ng-repeat="color in colorNumber | limitTo:quote.colors")
+					label Print color:
+						input
 				label Location
 				select(ng-model="quote.locationName", ng-options="option.name as option.name for option in locationName")
 				label Upload art files
@@ -43,7 +44,7 @@
 		p(ng-show="returnQuote") Total: {{returnQuote.price | currency}}
 
 		form(ng-show="returnQuote", ng-submit="newOrder()")
-			input(type="submit", value="Add to cart")
+			input(type="submit", value="Submit Order")
 			
 
 	div(ng-show="returnQuote")

@@ -1,10 +1,10 @@
 var mongoose = require('mongoose');
 
 var orderSchema = mongoose.Schema({
-	name             : String,
 	quote			 : [{type : mongoose.Schema.ObjectId, ref : 'quotes'}],
-	price			 : Number,
-	user		     : {type : mongoose.Schema.ObjectId, ref : 'user'}
+	user		     : {type : mongoose.Schema.ObjectId, ref : 'user'},
+	status 			 : String,
+	date			 : {type : Date}
 });
 
 var Order = mongoose.model('orders', orderSchema);

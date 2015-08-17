@@ -11,7 +11,9 @@ var apiController = {
 	},
 
 	getUserOrder: function(req, res){
-		Order.findOne({}).populate('quote user').exec(function(err, order){
+		console.log('Q - ', req.query)
+		Order.findOne({_id: req.query.id}).populate('quote user').exec(function(err, order){
+			console.log(err)
 			res.send(order)
 		})
 	},
@@ -21,6 +23,13 @@ var apiController = {
 			res.send(orders)
 		})
 		
+	},
+
+	getHomeOrder: function(req, res){
+		Order.find({user: req.query.id}).populate('quote user').exec(function(err, order){
+			console.log(err)
+			res.send(order)
+		})
 	},
 
 	
@@ -53,8 +62,10 @@ var apiController = {
 		var newQuote = new Quote({
 			name        : req.body.name,
 			shirts      : shirts,
+			shirtColor  : req.body.shirtColor,
+			shirtStyle  : req.body.shirtStyle,
 			locations	: location,
-			price		: total,
+			price		: total
 		});
 
 		// console.log(newQuote)
@@ -75,13 +86,14 @@ var apiController = {
 
 		console.log(req.body)
 		var newOrder = new Order({
-			name   : req.body.name,
 			quote  : req.body._id,
-			// price  : totalPrice
-			user   : req.user._id
+			user   : req.user._id,
+			status : 'In Review',
+			date   : new Date()
 
 		})
 		newOrder.save(function(err, order){
+			console.log(err)
 			res.send(order)
 			})
 	}

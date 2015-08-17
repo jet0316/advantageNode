@@ -2,5 +2,17 @@ h1 Welcome, {{user.username}}!
 
 h5 phone number: {{user.phonenumber}}
 
+input(ng-model="search")
+
+div(ng-repeat="order in orders | filter:search")
+	h3 {{order.user.username}}
+	div(ng-repeat="quote in order.quote")
+		h5 {{quote.name}}
+		hr
+		div(ng-repeat="location in quote.locations")
+			p {{location.colors}}
+			p {{location.locationName}}
+		p {{quote.price | currency}}
+
 p
 	a(href="/logout") Log out

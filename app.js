@@ -62,6 +62,8 @@ app.get('/api/getOrder', apiController.getOrder);
 
 app.get('/api/getUserOrder', apiController.getUserOrder);
 
+app.get('/api/getHomeOrder', apiController.getHomeOrder);
+
 
 app.use(passportConfig.ensureAuthenticated);
 

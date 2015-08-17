@@ -2,5 +2,14 @@ h1 Welcome, admin {{user.username}}!
 
 h5 phone number: {{user.phonenumber}}
 
+div(ng-repeat="order in orders")
+	hr
+	h2 {{order.user.username}}
+	div(ng-repeat="quote in order.quote")
+		div(ng-repeat="location in quote.locations")
+			p {{location.colors}}
+			p {{location.locationName}}
+		p {{quote.price | currency}}
+
 p
 	a(href="/logout") Log out

@@ -14,16 +14,16 @@ master.config(function($routeProvider){
 		.when('/user/:profileID', {
 			templateUrl : '/templates/profile',
 			controller  : 'user',
-			resolve     : {
-				'auth'  : function($rootScope){
-					if($rootScope.user){
-						return true
-					}
-					else{
-						$location.path('/')
-					}
-				}
-			}
+			// resolve     : {
+			// 	'auth'  : function($rootScope){
+			// 		if($rootScope.user){
+			// 			return true
+			// 		}
+			// 		else{
+			// 			$location.path('/')
+			// 		}
+			// 	}
+			// }
 		})
 		.when('/quotes', {
 			templateUrl : '/templates/quotes',
@@ -42,16 +42,16 @@ master.config(function($routeProvider){
 		.when('/admin/:adminName', {
 			templateUrl : '/templates/admin',
 			controller  : 'admin',
-			resolve     : {
-				'auth'  : function($rootScope){
-					if($rootScope.user.admin){
-						return true
-					}
-					else{
-						$location.path('/')
-					}
-				}
-			}
+			// resolve     : {
+			// 	'auth'  : function($rootScope){
+			// 		if($rootScope.user.admin){
+			// 			return true
+			// 		}
+			// 		else{
+			// 			$location.path('/')
+			// 		}
+			// 	}
+			// }
 		})
 		.when('/cart', {
 			templateUrl : '/templates/cart',
@@ -82,8 +82,7 @@ master.controller('home', function($scope, $http, $resource){
 
 
 master.controller('login', function($scope, $http, $resource, $rootScope, $location){
-
-	
+	console.log('loc', $location)	
 	$scope.user = $rootScope.user
 	$scope.login = function(){
 
@@ -111,7 +110,7 @@ master.controller('login', function($scope, $http, $resource, $rootScope, $locat
 	$scope.newuser = function(){
 		$http.post('/signup', $scope.newUser)
 			.then(function(response){
-				
+				$rootScope.user = response.data
 				$location.url('/user/' + response.data.username)
 			})
 	}
@@ -127,10 +126,11 @@ master.controller('login', function($scope, $http, $resource, $rootScope, $locat
 
 master.controller('user', function($scope, $http, $rootScope){
 	$scope.user = $rootScope.user
-	// $http.get('/api/user').then(function(response){
-	// 	$rootScope.user = response.data
-	// 	$scope.user = $rootScope.user
-	// })
+
+	$http.get('/api/getHomeOrder?id=' + $rootScope.user._id).then(function(response){
+		console.log(response)
+		$scope.orders = response.data
+	})
 });
 
 
@@ -155,7 +155,7 @@ master.factory('orderFactory', function($http, $resource){
 	}
 });
 
-master.controller('quotes', function($scope, $location, $http, orderFactory){
+master.controller('quotes', function($scope, $location, $rootScope, $http, orderFactory){
 
 	$scope.options = [{name : 1, val : 1}, 
 					{name : 2, val : 2},
@@ -187,9 +187,19 @@ master.controller('quotes', function($scope, $location, $http, orderFactory){
 						{name : 'Left Sleeve'},
 						{name : 'Right Sleeve'},
 						{name : 'Back Tag'},
+						{name : 'Right Thigh'},
+						{name : 'Left Thigh'},
 						]
-	
 
+	
+	
+	$scope.shirtStyle = [{name : 'T-Shirt'},
+						{name : 'Long Sleeve T-Shirt'},
+						{name : 'Hoodie'},
+						{name : 'Polo'},
+						{name : 'Shorts'},
+						{name : 'Sweats'},
+						]
 
 	$scope.locationList = [{},{},{},{},{},{},{}]
 
@@ -215,9 +225,12 @@ master.controller('quotes', function($scope, $location, $http, orderFactory){
 	}
 
 	$scope.newOrder = function(){
+
 		$http.post('/api/newOrder', $scope.returnQuote)
 		.then(function(response){
-			// console.log(response)
+
+			$rootScope.orderId = response.data._id
+			console.log(response)
 			$location.path('/cart')
 		})
 		console.log('hello?', $scope.returnQuote)
@@ -230,11 +243,14 @@ master.controller('quotes', function($scope, $location, $http, orderFactory){
 
 
 master.controller('admin', function($scope, $http){
-
+	$http.get('/api/getOrder').then(function(response){
+		$scope.orders = response.data
+	})
 });
 
-master.controller('cart', function($scope, $http, $resource){
-	$http.get('/api/getUserOrder').then(function(response){
+master.controller('cart', function($scope, $http, $resource, $rootScope){
+	console.log($rootScope.orderId)
+	$http.get('/api/getUserOrder?id=' + $rootScope.orderId).then(function(response){
 		$scope.order = response.data
 		console.log(response.data)
 	})

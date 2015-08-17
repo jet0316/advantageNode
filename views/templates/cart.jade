@@ -1,8 +1,15 @@
-h1 Cart
+h1 Order Confirmation
 
 //- h3 Order : {{order.quote}} 
 h3 Customer Name: {{order.user.username}}
 div(ng-repeat="quote in order.quote") 
-	h4 Item Title: {{quote.name}}
+	h5 Item Title: {{quote.name}}
 	div(ng-repeat="location in quote.locations")
+		h4 {{location.colors}}
 		h4 {{location.locationName}}
+	h5 {{quote.price | currency}}
+a(href="#/account")
+	h6 Done
+
+
+

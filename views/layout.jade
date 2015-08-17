@@ -3,6 +3,7 @@ html(lang='en', ng-app="master")
 	head
 		meta(charset="utf-8")
 		title Advantage Screen Print
+		//- link(rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css")
 		link(rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.5/cerulean/bootstrap.min.css")
 		link(rel="stylesheet" type="text/css" href="CSS/main.css")
 
@@ -28,9 +29,7 @@ html(lang='en', ng-app="master")
 								li(ng-show="!!!user")
 									a(href="#/login") LOG IN/SIGN UP	
 								li(ng-show="user")
-									a(href="#/quotes") QUOTES
-								li(ng-show="!!!user.admin && user")
-									a(href="#/cart") CART
+									a(href="#/quotes") GET QUOTE/PLACE ORDER
 								li(ng-show="!!!user.admin && user")
 									a(href="#/user/{{user.username}}") ACCOUNT
 								li(ng-show="user.admin")

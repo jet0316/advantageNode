@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var locationsSchema = mongoose.Schema({
 	colors       : Number,
+	printColor   : String,
 	artFile      : String,
 	locationName : String,
 });
@@ -9,6 +10,7 @@ var locationsSchema = mongoose.Schema({
 var quoteSchema = mongoose.Schema({
 	name 		: {type : String, default : 'No Name'},
 	shirts      : Number,
+	shirtColor  : String,
 	locations	: [locationsSchema],
 	price		: Number,
 	

@@ -117,7 +117,7 @@ var authenticationController = {
 				// Flash the message and redirect to the login view to
 				// show it.
 				req.flash('error', errorMessage);
-				return res.send({err: 'Error'});
+				return res.send(err);
 			}
 
 			// If we make it this far, we are ready to log the user in.
