@@ -7,6 +7,8 @@ var flash = require('connect-flash');
 var passport = require('passport');
 var passportConfig = require('./config/passport.js');
 
+
+
 var apiController = require('./controllers/api.js')
 var indexController = require('./controllers/index.js');
 var authenticationController = require('./controllers/authentication.js');
@@ -54,15 +56,15 @@ app.get('/api/user', apiController.getUser);
 
 app.post('/api/quote', apiController.createQuote)
 
-// app.get('/api/getUserOrder', apiController.getUserOrder);
+app.post('/api/newOrder', apiController.newOrder);
 
-// app.get('/api/getOrder', apiController.getOrder);
+app.get('/api/getOrder', apiController.getOrder);
+
+app.get('/api/getUserOrder', apiController.getUserOrder);
 
 
 app.use(passportConfig.ensureAuthenticated);
 
-
-// app.get('/api/user', apiController.get)
 
 var server = app.listen(5687, function() {
 	console.log('Express server listening on port ' + server.address().port);

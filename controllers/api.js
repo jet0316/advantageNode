@@ -1,8 +1,9 @@
 var User = require('../models/user.js');
 var Quote = require('../models/quote.js');
 var Order = require('../models/order.js');
-// var Pricelist = require('../models/priceList.json')
+var Pricelist = require('../models/priceList.json');
 
+// console.log(Pricelist)
 var apiController = {
 	getUser: function(req, res){
 		// console.log(req.user)
@@ -22,42 +23,68 @@ var apiController = {
 		
 	},
 
-	createOrder: function(req, res){
-		var newOrder = new Order({
-			name  : req.body.name,
-			// quote : 
-			user : req.user._id
-		})
-	},
 	
 	createQuote: function(req, res){
 		var shirts = req.body.shirts
 		var location = req.body.locations
-		// var 
-		// var price = Pricelist 
-		console.log(location)
+		var priceArr = []
+		var total = 0
+
+
+
+		location.forEach(function(location){
+		var color = location.colors
+			for (var i = 0; i < Pricelist.length; i++) {
+				if((shirts >= Pricelist[i].shirtCountLow) && (shirts <= Pricelist[i].shirtCountHigh) 
+					&& (color === Pricelist[i].shirtColor)){
+						var output = priceArr.push(Pricelist[i].shirtPrice)
+						return output
+
+			
+				}
+			}
+		})
+		priceArr.forEach(function(element){
+			var output = total += element * shirts
+			return output
+		})
+
 
 		var newQuote = new Quote({
 			name        : req.body.name,
 			shirts      : shirts,
 			locations	: location,
-
-			// price		: Number,
-			user		: req.user._id
+			price		: total,
 		});
 
-		console.log(newQuote)
+		// console.log(newQuote)
 
 
-		newQuote.save(function(err, order){
+		newQuote.save(function(err, quote){
 			if(err) {
 
 			}
 			else {
-				res.send(order)	
+				res.send(quote)	
 			}
 		})
 	},
+	newOrder: function(req, res){
+
+		// var totalPrice = 
+
+		console.log(req.body)
+		var newOrder = new Order({
+			name   : req.body.name,
+			quote  : req.body._id,
+			// price  : totalPrice
+			user   : req.user._id
+
+		})
+		newOrder.save(function(err, order){
+			res.send(order)
+			})
+	}
 
 }
 

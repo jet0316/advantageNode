@@ -1,1 +1,8 @@
-h1 hi
+h1 Cart
+
+//- h3 Order : {{order.quote}} 
+h3 Customer Name: {{order.user.username}}
+div(ng-repeat="quote in order.quote") 
+	h4 Item Title: {{quote.name}}
+	div(ng-repeat="location in quote.locations")
+		h4 {{location.locationName}}

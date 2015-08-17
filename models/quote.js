@@ -7,12 +7,11 @@ var locationsSchema = mongoose.Schema({
 });
 
 var quoteSchema = mongoose.Schema({
-	name 		: String,
+	name 		: {type : String, default : 'No Name'},
 	shirts      : Number,
 	locations	: [locationsSchema],
 	price		: Number,
-	user		: {type : mongoose.Schema.ObjectId, ref : 'user'}
-
+	
 });
 
 var Quotes = mongoose.model('quotes', quoteSchema);

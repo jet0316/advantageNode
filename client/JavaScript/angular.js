@@ -9,7 +9,7 @@ master.config(function($routeProvider){
 		})
 		.when('/login', {
 			templateUrl : '/templates/login',
-			controller  : 'profile'
+			controller  : 'login'
 		})
 		.when('/user/:profileID', {
 			templateUrl : '/templates/profile',
@@ -28,16 +28,16 @@ master.config(function($routeProvider){
 		.when('/quotes', {
 			templateUrl : '/templates/quotes',
 			controller  : 'quotes',
-			// resolve     : {
-			// 	'auth'	: function($rootScope){
-			// 		if($rootScope.user){
-			// 			return true
-			// 		}
-			// 		else{
-			// 			$location.path('/')
-			// 		}
-			// 	}
-			// }
+			resolve     : {
+				'auth'	: function($rootScope){
+					if($rootScope.user){
+						return true
+					}
+					else{
+						$location.path('/')
+					}
+				}
+			}
 		})
 		.when('/admin/:adminName', {
 			templateUrl : '/templates/admin',
@@ -55,17 +55,17 @@ master.config(function($routeProvider){
 		})
 		.when('/cart', {
 			templateUrl : '/templates/cart',
-			controller  : 'order',
-			resolve     : {
-				'auth'  : function($rootScope){
-					if($rootScope.user){
-						return true
-					}
-					else{
-						$location.path('/')
-					}
-				}
-			}
+			controller  : 'cart',
+			// resolve     : {
+			// 	'auth'  : function($rootScope){
+			// 		if($rootScope.user){
+			// 			return true
+			// 		}
+			// 		else{
+			// 			$location.path('/')
+			// 		}
+			// 	}
+			// }
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -81,7 +81,7 @@ master.controller('home', function($scope, $http, $resource){
 });
 
 
-master.controller('profile', function($scope, $http, $resource, $rootScope, $location){
+master.controller('login', function($scope, $http, $resource, $rootScope, $location){
 
 	
 	$scope.user = $rootScope.user
@@ -126,10 +126,11 @@ master.controller('profile', function($scope, $http, $resource, $rootScope, $loc
 });
 
 master.controller('user', function($scope, $http, $rootScope){
-	$http.get('/api/user').then(function(response){
-		$rootScope.user = response.data
-		$scope.user = $rootScope.user
-	})
+	$scope.user = $rootScope.user
+	// $http.get('/api/user').then(function(response){
+	// 	$rootScope.user = response.data
+	// 	$scope.user = $rootScope.user
+	// })
 });
 
 
@@ -140,9 +141,6 @@ master.controller('navbar', function($scope, $http, $rootScope){
 			$scope.user = $rootScope.user 
 			
 		})
-		// $scope.$apply(function(){
-
-		// })
 	})
 });
 
@@ -157,7 +155,7 @@ master.factory('orderFactory', function($http, $resource){
 	}
 });
 
-master.controller('quotes', function($scope, $http, orderFactory){
+master.controller('quotes', function($scope, $location, $http, orderFactory){
 
 	$scope.options = [{name : 1, val : 1}, 
 					{name : 2, val : 2},
@@ -168,10 +166,6 @@ master.controller('quotes', function($scope, $http, orderFactory){
 					{name : 7, val : 7},
 					]
 	$scope.locations = 1
-
-
-
-	
 
 	$scope.colorNumber = [{name : 1, val : 1}, 
 						{name : 2, val : 2},
@@ -205,12 +199,14 @@ master.controller('quotes', function($scope, $http, orderFactory){
 		$scope.locationList.forEach(function(element){
 			if(element.colors){
 				$scope.locationArr.push(element)
-				console.log($scope.locationArr)
+				// console.log($scope.locationArr)
 			}
 		})
 
 		$scope.quote.locations = $scope.locationArr
-		$http.post('/api/quote', $scope.quote)
+		$http.post('/api/quote', $scope.quote).then(function(response){
+			$scope.returnQuote = response.data
+		})
 		$scope.quote = {}
 		$scope.locationList = [{},{},{},{},{},{},{}]
 		$scope.colors = 1
@@ -218,37 +214,30 @@ master.controller('quotes', function($scope, $http, orderFactory){
 
 	}
 
-	// $http.get('/api/getUserOrder').then(function(response){
-	// 	scope.order = response.data
-	// });
-
-	// var newCryptAnimal = new orderFactory.model(this.newAnimal);
-
-
-	// $scope.dataID = function(){
-
-	// 	$scope.locationId++
-	// 	// $scope.locationId = 0
-	// 	console.log($scope.locationId)
-	// }
-});
-
-master.controller('layout', function($scope, $http){
-
 	$scope.newOrder = function(){
-		$http.get('/api/user').then(function(response){
-			$scope.user = response.data
-	})
-
+		$http.post('/api/newOrder', $scope.returnQuote)
+		.then(function(response){
+			// console.log(response)
+			$location.path('/cart')
+		})
+		console.log('hello?', $scope.returnQuote)
 	}
+
 });
+
+
+
+
 
 master.controller('admin', function($scope, $http){
 
 });
 
 master.controller('cart', function($scope, $http, $resource){
-
+	$http.get('/api/getUserOrder').then(function(response){
+		$scope.order = response.data
+		console.log(response.data)
+	})
 });
 
 

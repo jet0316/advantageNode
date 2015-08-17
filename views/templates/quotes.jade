@@ -2,7 +2,7 @@
 	h4 Get a quote!
 	form(ng-submit="newQuote()")
 		div(class="form-group")
-			label Job Name
+			label Quote Name:
 			input(ng-model="quote.name") 
 			label How many shirts:
 			input(ng-model="quote.shirts", class="form-control shirts" placeholder="Number of shirts")
@@ -35,10 +35,17 @@
 
 							
 	.total-container
-		p(ng-show="quote.shirts") Shirts: {{quote.shirts}}
-		p {{locationList}}
+		p(ng-show="returnQuote") Shirts: {{returnQuote.shirts}}
+		div(ng-show="returnQuote", ng-repeat="item in returnQuote.locations")
+			hr
+			p location: {{item.locationName}} 
+			p {{item.colors}} Color
+		p(ng-show="returnQuote") Total: {{returnQuote.price | currency}}
+
+		form(ng-show="returnQuote", ng-submit="newOrder()")
+			input(type="submit", value="Add to cart")
 			
 
-	div
+	div(ng-show="returnQuote")
 		p * Quotes are only for print price, if you would like to order shirts go 
 			a(href="https://www.alphabroder.com/") here!
