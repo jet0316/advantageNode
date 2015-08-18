@@ -11,6 +11,7 @@ var quoteSchema = mongoose.Schema({
 	name 		: {type : String, default : 'No Name'},
 	shirts      : Number,
 	shirtColor  : String,
+	shirtStyle  : String,
 	locations	: [locationsSchema],
 	price		: Number,
 	

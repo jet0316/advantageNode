@@ -2,21 +2,21 @@
 	.user-container
 		h1 Welcome, {{user.username}}!
 
-		h5 phone number: {{user.phonenumber}}
+		h5 Email: {{user.email}}
 
 	input(ng-model="search", placeholder="Search Orders")
 
-	//- p {{orders}}
-	h2 Orders:
+	div(ng-show="orders")
+		h2 Orders:
 
-	div.location-container(ng-repeat="order in orders | filter:search")
-		div(ng-repeat="quote in order.quote")
-			h4 {{quote.name}}
-			div(ng-repeat="location in quote.locations")
-				h5 {{location.colors}} color, {{location.color}} {{location.locationName}} print.
-			h6 {{quote.price | currency}}
-		.date
-			h6 {{order.date}}
+		div.location-container(ng-repeat="order in orders | filter:search")
+			div(ng-repeat="quote in order.quote")
+				h4 {{quote.name}}
+				div(ng-repeat="location in quote.locations")
+					h5 {{location.colors}} color, {{location.color}} {{location.locationName}} print.
+				h6 {{quote.price | currency}}
+			//- .date
+			//- 	h6 {{order.date}}
 			
 
 	p

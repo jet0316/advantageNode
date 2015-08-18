@@ -6,14 +6,12 @@ var Pricelist = require('../models/priceList.json');
 // console.log(Pricelist)
 var apiController = {
 	getUser: function(req, res){
-		// console.log(req.user)
 		res.send(req.user)
 	},
 
 	getUserOrder: function(req, res){
 		console.log('Q - ', req.query)
 		Order.findOne({_id: req.query.id}).populate('quote user').exec(function(err, order){
-			console.log(err)
 			res.send(order)
 		})
 	},
@@ -27,7 +25,6 @@ var apiController = {
 
 	getHomeOrder: function(req, res){
 		Order.find({user: req.query.id}).populate('quote user').exec(function(err, order){
-			console.log(err)
 			res.send(order)
 		})
 	},
@@ -68,7 +65,7 @@ var apiController = {
 			price		: total
 		});
 
-		// console.log(newQuote)
+		
 
 
 		newQuote.save(function(err, quote){
@@ -89,11 +86,9 @@ var apiController = {
 			quote  : req.body._id,
 			user   : req.user._id,
 			status : 'In Review',
-			date   : new Date()
-
+			date   : req.body.date
 		})
 		newOrder.save(function(err, order){
-			console.log(err)
 			res.send(order)
 			})
 	}

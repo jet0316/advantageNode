@@ -8,41 +8,91 @@ html(lang='en', ng-app="master")
 		link(rel="stylesheet" type="text/css" href="CSS/main.css")
 
 	body
-	.container-fluid.navhead
-		.row
+		nav.navbar.navbar-default.navbar-top
 			.container-fluid
-				nav.nav.navbar-default
-					.row
-						.col-md-10.col-md-offset-1
-							h3.nav.navbar-left Advantage
-							ul.nav.navbar-left
-								li
-									a.navbar-brand(href="/")
-							ul.nav.navbar-nav.navbar-right(ng-controller="navbar")
-								li
-									a(href="#/") HOME
-								li
-									a(href="#/about") ABOUT
-								li
-									a(href="#/contact") CONTACT US
+				.navbar-header
+					button.navbar-toggle.collapsed(type='button', data-toggle='collapse', data-target='#bs-example-navbar-collapse-1')
+						span.sr-only Toggle navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='#/') Advantage Screenprint
+				#bs-example-navbar-collapse-1.collapse.navbar-collapse
+					ul.nav.navbar-nav.navbar-right(ng-controller="navbar")
+						li
+							a(href="#/") HOME
+						li
+							a(href="#/about") ABOUT
+						li
+							a(href="#/contact") CONTACT US
 
-								li(ng-show="!!!user")
-									a(href="#/login") LOG IN/SIGN UP	
-								li(ng-show="user")
-									a(href="#/quotes") GET QUOTE/PLACE ORDER
-								li(ng-show="!!!user.admin && user")
-									a(href="#/user/{{user.username}}") ACCOUNT
-								li(ng-show="user.admin")
-									a(href="#/admin/{{user.username}}") ACCOUNT
-								li(ng-show="user")
-									a(href="/logout") LOGOUT
-		block content
+						li(ng-show="!!!user.password")
+							a(href="#/login") LOG IN/SIGN UP	
+						li(ng-show="user.password")
+							a(href="#/quotes") GET QUOTE/PLACE ORDER
+						li(ng-show="!!!user.admin && user.password")
+							a(href="#/user/{{user.username}}") ACCOUNT
+						li(ng-show="user.admin")
+							a(href="#/admin/{{user.username}}") ACCOUNT
+						li(ng-show="user.password")
+							a(href="/logout") LOGOUT
+		.container-fluid
+			block content
+
+
 		
 
 		//- script(src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js")
-		//- script(src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
+		script(src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.1/jquery.min.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular.min.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-resource.js")
 		script(src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.3/angular-route.js")
+		script(src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js")
 		//- script(src="JavaScript/main.js")
 		script(src="JavaScript/angular.js")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+		//- nav.nav.navbar-default
+		//- 	.navbar-header
+		//- 		button(type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false")
+		//- 			span(class="sr-only") Toggle navigation
+		//- 			span(class="icon-bar")
+		//- 			span(class="icon-bar")
+		//- 			span(class="icon-bar")
+		//- 		a(href="#/")
+		//- 			h1.nav.navbar-left.logo Advantage
+		//- 	#bs-example-navbar-collapse-1.collapse.navbar-collapse
+		//- 		ul.nav.navbar-nav.navbar-right(ng-controller="navbar")
+		//- 			li
+		//- 				a(href="#/") HOME
+		//- 			li
+		//- 				a(href="#/about") ABOUT
+		//- 			li
+		//- 				a(href="#/contact") CONTACT US
+
+		//- 			li(ng-show="!!!user.password")
+		//- 				a(href="#/login") LOG IN/SIGN UP	
+		//- 			li(ng-show="user.password")
+		//- 				a(href="#/quotes") GET QUOTE/PLACE ORDER
+		//- 			li(ng-show="!!!user.admin && user.password")
+		//- 				a(href="#/user/{{user.username}}") ACCOUNT
+		//- 			li(ng-show="user.admin")
+		//- 				a(href="#/admin/{{user.username}}") ACCOUNT
+		//- 			li(ng-show="user.password")
+		//- 				a(href="/logout") LOGOUT

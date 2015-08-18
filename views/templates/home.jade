@@ -2,5 +2,12 @@
 	.hero-text
 		h1 Advantage Screen Print
 		h2 Our goal is to provide the best quality screen printing, at an affordable price.
-		p
-			a(href="#/login").btn.btn-primary.btn-large Login/SignUp
+		a.home-button(ng-show="user", href="#/quotes")
+			.btn.btn-danger.btn-lg Get Quote/Place Order
+		a.home-button(href="#/login", ng-show="!user")
+			.btn.btn-danger.btn-lg Login/SignUp
+	//- .row.home-div
+	//- 	.about-div.box
+	//- 		p hello
+	//- 	.contact-div.box
+	//- 		p hi

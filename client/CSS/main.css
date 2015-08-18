@@ -3,10 +3,11 @@
 
 body{
 	font-family: 'Lato', sans-serif;
-	background-color: gray;
+	background-color: #CCCCCC;
 	background-image:url('http://shirtsup.net/wp-content/uploads/screenprinting2-copy.jpg');
-    background-size:cover;
-    background-color: #EEEEEE;
+	opacity: .9;
+    background-size: cover;
+    background-color: #CCCCCC; 
 }
 
 .header{
@@ -62,30 +63,32 @@ body{
 .container {
 	background-color: white;
 	border: 1px solid black;
-	top: 25px;
+	top: 10px;
 	position: relative;
-	box-shadow: 0px 0px 8px 1px;
-	padding: 10px;
+	box-shadow: 0px 0px 8px 1px ;
+	padding: 15px;
 	border-radius: 2px;
-	text-align: center;
+	text-align: left;
 }
+
+
 
 .hero-unit {
     
     height:585px;
     text-align: center;
+    
+}
 
-  
-  }
 .hero-unit h1 {
     color: #FFFFFF;
-    font-size: 60px;
+    font-size: 50px;
     letter-spacing: -1px;
     line-height: 1;
     margin-bottom: 0;
 }
 .hero-unit h2 {
-    font-size: 25px;
+    font-size: 20px;
     color: #FFFFFF;
    
 }
@@ -98,4 +101,68 @@ body{
 .login-container {
 	border: 1px solid black;
 	border-radius: 1px;
+	text-align: center;
+	padding: 10px;
+}
+
+.shirts {
+	width: 155px;
+}
+
+.quote-button {
+	text-align: center;
+}
+
+.submit-button {
+	width: 100%;
+}
+
+.navbar-default {
+	box-shadow: 0px 0px 10px 2px;
+	padding: 10px;
+}
+
+.logo {
+	color: white;
+	position: relative;
+	top: -18px;
+}
+
+.input-field {
+	padding: 2px;
+}
+
+.footer {
+	width: 100%;
+	height: 100px;
+}
+
+.line {
+	width: 2px;
+	height: 100%;
+	color: gray;
+}
+
+.box {
+	height: 20px;
+	width: 20px;
+	background-color: white;
+}
+
+.home-div {
+	position: relative;
+	text-align: center;
+}
+
+.order-button {
+	background-color: red;
+}
+
+.home-button {
+	position: relative;
+	top: 15px;
+}
+
+button:hover {
+	background-color: lightblue;
 }

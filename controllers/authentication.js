@@ -22,7 +22,7 @@ var performLogin = function(req, res, next, user){
 		if(err) return next(err);
 
 		// Otherwise, send the user to the homepage.
-		return res.send(req.user);
+		res.send(req.user);
 	});
 };
 
@@ -65,6 +65,7 @@ var authenticationController = {
 			if(!user) {
 				req.flash('error', 'Error logging in. Please try again.');
 				return res.send({err: 'Error'});
+				
 			}
 			
 			// If we make it this far, the user has correctly authenticated with passport
@@ -102,6 +103,7 @@ var authenticationController = {
 			// If there is an error, it will come with some special codes and
 			// information. We can customize the printed message based on
 			// the error mongoose encounters
+			console.log(err)
 			if(err) {
 
 				// By default, we'll show a generic message...
@@ -117,7 +119,7 @@ var authenticationController = {
 				// Flash the message and redirect to the login view to
 				// show it.
 				req.flash('error', errorMessage);
-				return res.send(err);
+				return res.send({error: err});
 			}
 
 			// If we make it this far, we are ready to log the user in.

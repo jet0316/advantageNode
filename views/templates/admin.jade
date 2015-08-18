@@ -11,12 +11,12 @@
 
 	div.location-container(ng-repeat="order in orders | filter:search")
 		h3 {{order.user.username}}
+		p {{order.date}}
 		div(ng-repeat="quote in order.quote")
-			.date
-				p {{quote.date}}
 			h4 {{quote.name}}
 			div(ng-repeat="location in quote.locations")
-				h6 {{location.colors}} color, {{location.color}} {{location.locationName}} print.
+				h6 {{location.colors}} color, {{location.locationName}} print.
+				p(ng-repeat="color in location.printColor") {{color}}
 			p {{quote.price | currency}}
 			
 

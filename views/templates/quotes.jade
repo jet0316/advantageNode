@@ -1,52 +1,54 @@
-.container
-	h1 Get a quote!
-	form(ng-submit="newQuote()")
-		div(class="form-group")
-			h3 Job Name:
-			input(ng-model="quote.name") 
-			h5 How many shirts:
-			input(ng-model="quote.shirts", class="form-control shirts" placeholder="Number of shirts")
-			h5 Shirt Color
-			input(ng-model="quote.shirtColor", class="form-control shirts" placeholder="Shirt Color")
-			h5 What kind of shirt?
-			select(ng-model="quote.shirtStyle", ng-options="option.name as option.name for option in shirtStyle")
+.container-fluid
+	.row
+		.container.col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
 
-		div
-			h4 How many print locations:
-				select(ng-model="locations", ng-options="option.val as option.name for option in options")
+			h1 Get a quote! Place an Order
+			form(ng-submit="newQuote()")
+				div(class="form-group")
+					h5 Job Name:
+					input.job-name(ng-model="quote.name") 
+					h5 How many garments:
+					input(ng-model="quote.shirts", class="form-control shirts" placeholder="Number of shirts")
+					h5 Item Color
+					input(ng-model="quote.shirtColor", class="form-control shirts" placeholder="Shirt Color")
+					h5 What kind of garment?
+					select(ng-model="quote.shirtStyle", ng-options="option.name as option.name for option in shirtStyle")
 
-				
-		div(ng-repeat="quote in locationList | limitTo:locations")
-			div(class="form-group")
-				h5 How many colors:
-				select(ng-init="quote.colors = options[0].val", class="colors", ng-model="quote.colors", ng-options="option.val as option.name for option in colorNumber")
-				div(ng-model="quote.printColor", ng-repeat="color in colorNumber | limitTo:quote.colors")
-					h5 Print color:
-						input
-				h6 Location
-				select(ng-model="quote.locationName", ng-options="option.name as option.name for option in locationName")
-				h5 Upload art files
-				input(type="file", ng-model="quote.art")
-			hr
+				div
+					h5 How many print locations:
+					select(ng-model="locations", ng-options="option.val as option.name for option in options")
 
-		div
-			button(type="submit" class="btn btn-info submit-button") Get quote!
+						
+				div(ng-repeat="quote in locationList | limitTo:locations")
+					hr
+					div(class="form-group")
+						h5 How many colors:
+						select(ng-init="quote.colors = options[0].val", class="colors", ng-model="quote.colors", ng-options="option.val as option.name for option in colorNumber")
+						div(ng-model="quote.printColor", ng-repeat="color in colorNumber | limitTo:quote.colors")
+							h5 Ink color:
+								input
+						h6 Location
+						select(ng-model="quote.locationName", ng-options="option.name as option.name for option in locationName")
+						h5 Upload art files
+						input(type="file", ng-model="quote.art")
+
+				div.quote-button
+					button(type="submit" class="btn btn-danger submit-button") Get quote!
+											
+				hr
+
 									
-		hr
+			.total-container
+				h5(ng-show="returnQuote") {{returnQuote.shirts}} {{returnQuote.shirtStyle}}
+				div(ng-show="returnQuote", ng-repeat="item in returnQuote.locations")
+					p location: {{item.colors}} Color, {{item.locationName}} print.
+					//- div(ng-repeat="item.")
+				p(ng-show="returnQuote") Total: {{returnQuote.price | currency}}
+				div.quote-button
+					form(ng-show="returnQuote", ng-submit="newOrder()")
+						button(type="submit" class="btn btn-info submit-button order-button" value="Submit Order") Submit Order
+					
 
-							
-	.total-container
-		h1(ng-show="returnQuote") Shirts: {{returnQuote.shirts}}
-		div(ng-show="returnQuote", ng-repeat="item in returnQuote.locations")
-			hr
-			p location: {{item.locationName}} 
-			p {{item.colors}} Color
-		p(ng-show="returnQuote") Total: {{returnQuote.price | currency}}
-
-		form(ng-show="returnQuote", ng-submit="newOrder()")
-			input(type="submit", value="Submit Order")
-			
-
-	div(ng-show="returnQuote")
-		p * Quotes are only for print price, if you would like to order shirts go 
-			a(href="https://www.alphabroder.com/") here!
+			div(ng-show="returnQuote")
+				p * Quotes are only for print price, if you would like to order shirts go 
+					a(href="https://www.alphabroder.com/") here!

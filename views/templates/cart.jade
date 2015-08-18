@@ -1,15 +1,17 @@
-h1 Order Confirmation
 
-//- h3 Order : {{order.quote}} 
-h3 Customer Name: {{order.user.username}}
-div(ng-repeat="quote in order.quote") 
-	h5 Item Title: {{quote.name}}
-	div(ng-repeat="location in quote.locations")
-		h4 {{location.colors}}
-		h4 {{location.locationName}}
-	h5 {{quote.price | currency}}
-a(href="#/account")
-	h6 Done
+.container
+	h1 Order Confirmation
+
+	//- h3 Order : {{order.quote}} 
+	h3 Customer Name: {{order.user.username}}
+	div(ng-repeat="quote in order.quote") 
+		h5 Item Title: {{quote.name}}
+		div(ng-repeat="location in quote.locations")
+			h4 {{location.colors}} Color, {{location.locationName}} print.
+		h5 {{quote.price | currency}}
+	p We will send you a confirmation e-mail once we recieve your order. We will let you know of any changes that are nessecary.
+	a(href="#/account")
+		h6 Done
 
 
 

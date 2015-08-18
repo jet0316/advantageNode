@@ -1,24 +1,25 @@
 .container
 	.login-container
 		.login
-			h3 Existing Users
+			h3 Login
 			form(ng-submit="login()")
-				div
+				.input-field
 					input(type="text", ng-model="user.username", placeholder="Username")
-				div
+				.input-field
 					input(type="password", ng-model="user.password", placeholder="Password")
-				div
+				.input-field
 					input(type="submit")
 		.login
-			h3 Register
+			h3 Sign Up
 			form(ng-submit="newuser()")
-				div
+				.error-message(ng-show="err") This user already exists
+				.input-field
 					input(type="text", ng-model="newUser.username", placeholder="Username")
-				div
+				.input-field
 					input(type="email", ng-model="newUser.email", placeholder="Email")
-				div
+				.input-field
 					input(type="password", ng-model="newUser.password", placeholder="Password")
-				div
+				.input-field
 					input(type="number", ng-model="newUser.phonenumber", placeholder="Phone number")
-				div
+				.input-field
 					input(type="submit")

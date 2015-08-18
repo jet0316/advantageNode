@@ -4,7 +4,7 @@ var orderSchema = mongoose.Schema({
 	quote			 : [{type : mongoose.Schema.ObjectId, ref : 'quotes'}],
 	user		     : {type : mongoose.Schema.ObjectId, ref : 'user'},
 	status 			 : String,
-	date			 : {type : Date}
+	date			 : String
 });
 
 var Order = mongoose.model('orders', orderSchema);

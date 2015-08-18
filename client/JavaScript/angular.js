@@ -14,27 +14,28 @@ master.config(function($routeProvider){
 		.when('/user/:profileID', {
 			templateUrl : '/templates/profile',
 			controller  : 'user',
-			// resolve     : {
-			// 	'auth'  : function($rootScope){
-			// 		if($rootScope.user){
-			// 			return true
-			// 		}
-			// 		else{
-			// 			$location.path('/')
-			// 		}
-			// 	}
-			// }
+			resolve     : {
+				message : function($rootScope, $location){
+					if($rootScope.user.email){
+						return true
+					}
+					else{
+						alert('User not in database')
+						$location.path('/login')
+					}
+				}
+			}
 		})
 		.when('/quotes', {
 			templateUrl : '/templates/quotes',
 			controller  : 'quotes',
 			resolve     : {
-				'auth'	: function($rootScope){
-					if($rootScope.user){
+				message	: function($rootScope, $location){
+					if($rootScope.user.email){
 						return true
 					}
 					else{
-						$location.path('/')
+						$location.path('/login')
 					}
 				}
 			}
@@ -42,30 +43,30 @@ master.config(function($routeProvider){
 		.when('/admin/:adminName', {
 			templateUrl : '/templates/admin',
 			controller  : 'admin',
-			// resolve     : {
-			// 	'auth'  : function($rootScope){
-			// 		if($rootScope.user.admin){
-			// 			return true
-			// 		}
-			// 		else{
-			// 			$location.path('/')
-			// 		}
-			// 	}
-			// }
+			resolve     : {
+				message : function($rootScope, $location){
+					if($rootScope.user.admin){
+						return true
+					}
+					else{
+						$location.path('/login')
+					}
+				}
+			}
 		})
 		.when('/cart', {
 			templateUrl : '/templates/cart',
 			controller  : 'cart',
-			// resolve     : {
-			// 	'auth'  : function($rootScope){
-			// 		if($rootScope.user){
-			// 			return true
-			// 		}
-			// 		else{
-			// 			$location.path('/')
-			// 		}
-			// 	}
-			// }
+			resolve     : {
+				message : function($rootScope, $location){
+					if($rootScope.user.password){
+						return true
+					}
+					else{
+						$location.path('/login')
+					}
+				}
+			}
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -102,6 +103,7 @@ master.controller('login', function($scope, $http, $resource, $rootScope, $locat
 					$location.url('/user/' + response.data.username)
 				}
 				else{
+					alert('User does not exist')
 					$location.url('/login')
 				}
 			})
@@ -110,8 +112,13 @@ master.controller('login', function($scope, $http, $resource, $rootScope, $locat
 	$scope.newuser = function(){
 		$http.post('/signup', $scope.newUser)
 			.then(function(response){
-				$rootScope.user = response.data
-				$location.url('/user/' + response.data.username)
+				if(response){
+					$rootScope.user = response.data
+					$location.url('/user/' + response.data.username)
+				}
+				else{
+					alert('This user already exists')
+				}
 			})
 	}
 
@@ -193,10 +200,10 @@ master.controller('quotes', function($scope, $location, $rootScope, $http, order
 
 	
 	
-	$scope.shirtStyle = [{name : 'T-Shirt'},
-						{name : 'Long Sleeve T-Shirt'},
-						{name : 'Hoodie'},
-						{name : 'Polo'},
+	$scope.shirtStyle = [{name : 'T-Shirts'},
+						{name : 'Long Sleeve T-Shirts'},
+						{name : 'Hoodies'},
+						{name : 'Polos'},
 						{name : 'Shorts'},
 						{name : 'Sweats'},
 						]
@@ -225,9 +232,11 @@ master.controller('quotes', function($scope, $location, $rootScope, $http, order
 	}
 
 	$scope.newOrder = function(){
+			$scope.returnQuote.date = moment().format('MMM DD YYYY')
 
 		$http.post('/api/newOrder', $scope.returnQuote)
 		.then(function(response){
+			
 
 			$rootScope.orderId = response.data._id
 			console.log(response)
@@ -243,9 +252,24 @@ master.controller('quotes', function($scope, $location, $rootScope, $http, order
 
 
 master.controller('admin', function($scope, $http){
-	$http.get('/api/getOrder').then(function(response){
-		$scope.orders = response.data
+	$http.get('/api/getOrder').
+		then(function(response){
+            $scope.orders = response.data.reverse();
+   //          $scope.orders.forEach(function(order){
+   //              order.date = (new Date(orders.date)).toDateString();
+   //          })
+			// // $scope.orders.date = moment().format('YYYY MM DD')
+            
 	})
+	// $http.get('/api/allUserPosts?username=' + $routeParams.username).
+ //        then(function(response){
+ //            $scope.orders = response.data.reverse();
+ //            $scope.orders.forEach(function(order){
+ //                order.date = (new Date(orders.date)).toDateString();
+ //            })
+
+
+ //        });
 });
 
 master.controller('cart', function($scope, $http, $resource, $rootScope){
@@ -256,6 +280,9 @@ master.controller('cart', function($scope, $http, $resource, $rootScope){
 	})
 });
 
+master.controller('home', function($scope, $rootScope){
+	$scope.user = $rootScope.user
+});
 
 
 
