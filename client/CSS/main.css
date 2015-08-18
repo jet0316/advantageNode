@@ -3,7 +3,10 @@
 
 body{
 	font-family: 'Lato', sans-serif;
-
+	background-color: gray;
+	background-image:url('http://shirtsup.net/wp-content/uploads/screenprinting2-copy.jpg');
+    background-size:cover;
+    background-color: #EEEEEE;
 }
 
 .header{
@@ -41,4 +44,58 @@ body{
     text-shadow: none;
     background-color: #fff;
     border-color: #fff;
+}
+
+.location-container {
+	border: 1px solid black;
+	border-radius: 2px;
+	box-shadow: 0px 0px 8px 1px;
+	padding: 10px;
+}
+
+.date {
+	position: relative;
+	float: right;
+	bottom: 85px;
+}
+
+.container {
+	background-color: white;
+	border: 1px solid black;
+	top: 25px;
+	position: relative;
+	box-shadow: 0px 0px 8px 1px;
+	padding: 10px;
+	border-radius: 2px;
+	text-align: center;
+}
+
+.hero-unit {
+    
+    height:585px;
+    text-align: center;
+
+  
+  }
+.hero-unit h1 {
+    color: #FFFFFF;
+    font-size: 60px;
+    letter-spacing: -1px;
+    line-height: 1;
+    margin-bottom: 0;
+}
+.hero-unit h2 {
+    font-size: 25px;
+    color: #FFFFFF;
+   
+}
+
+.hero-text {
+	position: relative;
+	top: 40px;
+}
+
+.login-container {
+	border: 1px solid black;
+	border-radius: 1px;
 }

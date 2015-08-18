@@ -1,15 +1,24 @@
-h1 Welcome, admin {{user.username}}!
+.container
+	h1 Welcome, admin {{user.username}}!
 
-h5 phone number: {{user.phonenumber}}
+	h5 phone number: {{user.phonenumber}}
 
-div(ng-repeat="order in orders")
-	hr
-	h2 {{order.user.username}}
-	div(ng-repeat="quote in order.quote")
-		div(ng-repeat="location in quote.locations")
-			p {{location.colors}}
-			p {{location.locationName}}
-		p {{quote.price | currency}}
+	input(ng-model="search", placeholder="Search Orders")
 
-p
-	a(href="/logout") Log out
+	//- p {{orders}}
+
+	h2 All Orders:
+
+	div.location-container(ng-repeat="order in orders | filter:search")
+		h3 {{order.user.username}}
+		div(ng-repeat="quote in order.quote")
+			.date
+				p {{quote.date}}
+			h4 {{quote.name}}
+			div(ng-repeat="location in quote.locations")
+				h6 {{location.colors}} color, {{location.color}} {{location.locationName}} print.
+			p {{quote.price | currency}}
+			
+
+	p
+		a(href="/logout") Log out

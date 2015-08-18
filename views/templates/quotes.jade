@@ -1,31 +1,31 @@
 .container
-	h4 Get a quote!
+	h1 Get a quote!
 	form(ng-submit="newQuote()")
 		div(class="form-group")
-			label Job Name:
+			h3 Job Name:
 			input(ng-model="quote.name") 
-			label How many shirts:
+			h5 How many shirts:
 			input(ng-model="quote.shirts", class="form-control shirts" placeholder="Number of shirts")
-			label Shirt Color
+			h5 Shirt Color
 			input(ng-model="quote.shirtColor", class="form-control shirts" placeholder="Shirt Color")
-			label What kind of shirt?
+			h5 What kind of shirt?
 			select(ng-model="quote.shirtStyle", ng-options="option.name as option.name for option in shirtStyle")
 
 		div
-			label How many print locations:
+			h4 How many print locations:
 				select(ng-model="locations", ng-options="option.val as option.name for option in options")
 
 				
 		div(ng-repeat="quote in locationList | limitTo:locations")
 			div(class="form-group")
-				label How many colors:
+				h5 How many colors:
 				select(ng-init="quote.colors = options[0].val", class="colors", ng-model="quote.colors", ng-options="option.val as option.name for option in colorNumber")
 				div(ng-model="quote.printColor", ng-repeat="color in colorNumber | limitTo:quote.colors")
-					label Print color:
+					h5 Print color:
 						input
-				label Location
+				h6 Location
 				select(ng-model="quote.locationName", ng-options="option.name as option.name for option in locationName")
-				label Upload art files
+				h5 Upload art files
 				input(type="file", ng-model="quote.art")
 			hr
 
@@ -36,7 +36,7 @@
 
 							
 	.total-container
-		p(ng-show="returnQuote") Shirts: {{returnQuote.shirts}}
+		h1(ng-show="returnQuote") Shirts: {{returnQuote.shirts}}
 		div(ng-show="returnQuote", ng-repeat="item in returnQuote.locations")
 			hr
 			p location: {{item.locationName}} 
