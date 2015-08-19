@@ -15,7 +15,7 @@
 		h5 {{order.user.phonenumber}}
 		h5 {{order.date}}
 		div(ng-repeat="quote in order.quote")
-			h5 {{quote.name}}
+			h3 {{quote.name}}
 			h5 {{quote.shirts}} {{quote.shirtStyle}}
 			div(ng-repeat="location in quote.locations")
 				h5 {{location.colors}} color, {{location.locationName}} print.
