@@ -64,6 +64,7 @@ app.get('/api/getUserOrder', apiController.getUserOrder);
 
 app.get('/api/getHomeOrder', apiController.getHomeOrder);
 
+app.post('/api/delete', apiController.delete);
 
 app.use(passportConfig.ensureAuthenticated);
 

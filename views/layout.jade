@@ -16,26 +16,26 @@ html(lang='en', ng-app="master")
 						span.icon-bar
 						span.icon-bar
 						span.icon-bar
-					a.navbar-brand(href='#/') Advantage Screenprint
+					a.navbar-brand(ng-href='#/') Advantage
 				#bs-example-navbar-collapse-1.collapse.navbar-collapse
 					ul.nav.navbar-nav.navbar-right(ng-controller="navbar")
 						li
-							a(href="#/") HOME
+							a(ng-href="#/") Home
 						li
-							a(href="#/about") ABOUT
+							a(ng-href="#/about") About
 						li
-							a(href="#/contact") CONTACT US
+							a(ng-href="#/contact") Contact Us
 
 						li(ng-show="!!!user.password")
-							a(href="#/login") LOG IN/SIGN UP	
+							a(ng-href="#/login") LogIn/SignUp	
 						li(ng-show="user.password")
-							a(href="#/quotes") GET QUOTE/PLACE ORDER
+							a(ng-href="#/quotes") Get Quote/Place Order
 						li(ng-show="!!!user.admin && user.password")
-							a(href="#/user/{{user.username}}") ACCOUNT
+							a(ng-href="#/user/{{user.username}}") Account
 						li(ng-show="user.admin")
-							a(href="#/admin/{{user.username}}") ACCOUNT
+							a(ng-href="#/admin/{{user.username}}") Account
 						li(ng-show="user.password")
-							a(href="/logout") LOGOUT
+							a(ng-href="/logout") Logout
 		.container-fluid
 			block content
 

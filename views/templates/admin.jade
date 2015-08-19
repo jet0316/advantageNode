@@ -1,7 +1,7 @@
 .container
 	h1 Welcome, admin {{user.username}}!
 
-	h5 phone number: {{user.phonenumber}}
+	h5 Email: {{user.email}}
 
 	input(ng-model="search", placeholder="Search Orders")
 
@@ -18,7 +18,11 @@
 				h6 {{location.colors}} color, {{location.locationName}} print.
 				p(ng-repeat="color in location.printColor") {{color}}
 			p {{quote.price | currency}}
-			
+		.right-side
+			.top-right
+				h5 Order status: {{order.status}}
+			button.btn.btn-danger.btn-sm(ng-click="deleteOrder()") REMOVE ORDER
+	hr
 
-	p
-		a(href="/logout") Log out
+	a.cart-button(href="/logout")
+		.btn.btn-info.btn-sm Logout

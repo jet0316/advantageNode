@@ -3,15 +3,16 @@
 	h1 Order Confirmation
 
 	//- h3 Order : {{order.quote}} 
-	h3 Customer Name: {{order.user.username}}
+	h4 Customer Name: {{order.user.username}}
 	div(ng-repeat="quote in order.quote") 
-		h5 Item Title: {{quote.name}}
+		h4 Job Name: {{quote.name}}
+		h4 {{quote.shirts}} {{quote.shirtStyle}}
 		div(ng-repeat="location in quote.locations")
 			h4 {{location.colors}} Color, {{location.locationName}} print.
-		h5 {{quote.price | currency}}
-	p We will send you a confirmation e-mail once we recieve your order. We will let you know of any changes that are nessecary.
-	a(href="#/account")
-		h6 Done
+		h4 {{quote.price | currency}}
+	p We will send you a confirmation e-mail once we recieve your order. We will send you a bill after everything is confirmed.
+	a.cart-button(href="#/user/order.user.username")
+		.btn.btn-info.btn-sm Done
 
 
 

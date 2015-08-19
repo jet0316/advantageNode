@@ -91,8 +91,22 @@ var apiController = {
 		newOrder.save(function(err, order){
 			res.send(order)
 			})
+	},
+	
+	delete: function(req, res){
+		// Order.remove({_id: req.body._id)})
+		console.log(req.body.date)
 	}
 
 }
 
 module.exports = apiController;
+
+
+
+
+
+
+
+
+

@@ -68,17 +68,14 @@ master.config(function($routeProvider){
 				}
 			}
 		})
+		.when('/contact', {
+			templateUrl : '/templates/contact',
+			controller  : 'home'
+
+		})
 		.otherwise({
 			redirectTo: '/'
 		})
-});
-
-
-
-
-
-master.controller('home', function($scope, $http, $resource){
-
 });
 
 
@@ -138,6 +135,13 @@ master.controller('user', function($scope, $http, $rootScope){
 		console.log(response)
 		$scope.orders = response.data
 	})
+
+	$scope.deleteOrder = function(){
+		console.log('TEST')
+		$http.post('/api/delete', $scope.orders).then(function(response){
+		})
+	}
+
 });
 
 
@@ -223,6 +227,7 @@ master.controller('quotes', function($scope, $location, $rootScope, $http, order
 		$scope.quote.locations = $scope.locationArr
 		$http.post('/api/quote', $scope.quote).then(function(response){
 			$scope.returnQuote = response.data
+			console.log(response.data)
 		})
 		$scope.quote = {}
 		$scope.locationList = [{},{},{},{},{},{},{}]

@@ -1,8 +1,11 @@
 .container-fluid
 	.row
-		.container.col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-4.col-md-4
+		.container.col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-3.col-md-6
 
 			h1 Get a quote! Place an Order
+			div
+				p * Quotes are only for print price, if you would like to order shirts go 
+					a(href="https://www.alphabroder.com/") here!
 			form(ng-submit="newQuote()")
 				div(class="form-group")
 					h5 Job Name:
@@ -32,6 +35,9 @@
 						h5 Upload art files
 						input(type="file", ng-model="quote.art")
 
+				h5 Order Comments:
+				textarea.text-area(ngModel="quote.comments")
+
 				div.quote-button
 					button(type="submit" class="btn btn-danger submit-button") Get quote!
 											
@@ -39,16 +45,14 @@
 
 									
 			.total-container
-				h5(ng-show="returnQuote") {{returnQuote.shirts}} {{returnQuote.shirtStyle}}
+				h5(ng-show="returnQuote") {{returnQuote.shirts}} {{returnQuote.shirtColor}} {{returnQuote.shirtStyle}}
 				div(ng-show="returnQuote", ng-repeat="item in returnQuote.locations")
 					p location: {{item.colors}} Color, {{item.locationName}} print.
-					//- div(ng-repeat="item.")
+					div(ng-repeat="color in item.printColor")
+						p {{color.printColor}}
 				p(ng-show="returnQuote") Total: {{returnQuote.price | currency}}
 				div.quote-button
 					form(ng-show="returnQuote", ng-submit="newOrder()")
 						button(type="submit" class="btn btn-info submit-button order-button" value="Submit Order") Submit Order
 					
 
-			div(ng-show="returnQuote")
-				p * Quotes are only for print price, if you would like to order shirts go 
-					a(href="https://www.alphabroder.com/") here!
