@@ -93,11 +93,22 @@ var apiController = {
 			})
 	},
 	
-	delete: function(req, res){
-		// Order.remove({_id: req.body._id)})
-		console.log(req.body.date)
-	}
+	deleteOrder : function(req, res){
+		Order.remove({ _id: req.params.id }, function(err, response) {
+			Order.find({ user : req.user._id}).populate('quote user').exec(function(err, orders){
 
+    		res.send(orders);
+			})
+		});
+	},
+	deleteMasterOrder : function(req, res){
+		Order.remove({ _id: req.params.id }, function(err, response) {
+			Order.find({}).populate('quote user').exec(function(err, orders){
+
+    		res.send(orders);
+			})
+		});
+	},
 }
 
 module.exports = apiController;

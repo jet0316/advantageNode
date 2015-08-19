@@ -29,7 +29,7 @@ html(lang='en', ng-app="master")
 						li(ng-show="!!!user.password")
 							a(ng-href="#/login") LogIn/SignUp	
 						li(ng-show="user.password")
-							a(ng-href="#/quotes") Get Quote/Place Order
+							a(ng-href="#/quotes") Get Quote/Place Order	
 						li(ng-show="!!!user.admin && user.password")
 							a(ng-href="#/user/{{user.username}}") Account
 						li(ng-show="user.admin")

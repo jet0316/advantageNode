@@ -7,21 +7,22 @@
 
 	//- p {{orders}}
 
-	h2 All Orders:
+	h1 All Orders:
 
 	div.location-container(ng-repeat="order in orders | filter:search")
 		h3 {{order.user.username}}
 		p {{order.date}}
 		div(ng-repeat="quote in order.quote")
 			h4 {{quote.name}}
+			h5 {{quote.shirts}} {{quote.shirtStyle}}
 			div(ng-repeat="location in quote.locations")
-				h6 {{location.colors}} color, {{location.locationName}} print.
+				h5 {{location.colors}} color, {{location.locationName}} print.
 				p(ng-repeat="color in location.printColor") {{color}}
 			p {{quote.price | currency}}
 		.right-side
 			.top-right
 				h5 Order status: {{order.status}}
-			button.btn.btn-danger.btn-sm(ng-click="deleteOrder()") REMOVE ORDER
+			button.btn.btn-danger.btn-sm(ng-click="deleteMasterOrder(order, $index)") DELETE ORDER
 	hr
 
 	a.cart-button(href="/logout")

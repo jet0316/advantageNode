@@ -136,9 +136,11 @@ master.controller('user', function($scope, $http, $rootScope){
 		$scope.orders = response.data
 	})
 
-	$scope.deleteOrder = function(){
-		console.log('TEST')
-		$http.post('/api/delete', $scope.orders).then(function(response){
+	$scope.deleteOrder = function(order, index){
+
+		console.log(order)
+		$http.delete('/api/delete/'+ order._id).then(function(response){
+			$scope.orders = response.data
 		})
 	}
 
@@ -252,29 +254,18 @@ master.controller('quotes', function($scope, $location, $rootScope, $http, order
 
 });
 
-
-
-
-
 master.controller('admin', function($scope, $http){
 	$http.get('/api/getOrder').
 		then(function(response){
             $scope.orders = response.data.reverse();
-   //          $scope.orders.forEach(function(order){
-   //              order.date = (new Date(orders.date)).toDateString();
-   //          })
-			// // $scope.orders.date = moment().format('YYYY MM DD')
-            
-	})
-	// $http.get('/api/allUserPosts?username=' + $routeParams.username).
- //        then(function(response){
- //            $scope.orders = response.data.reverse();
- //            $scope.orders.forEach(function(order){
- //                order.date = (new Date(orders.date)).toDateString();
- //            })
+	})	
+	$scope.deleteMasterOrder = function(order, index){
 
-
- //        });
+		console.log(order)
+		$http.delete('/api/deletemaster/'+ order._id).then(function(response){
+			$scope.orders = response.data
+		})
+	}
 });
 
 master.controller('cart', function($scope, $http, $resource, $rootScope){
@@ -283,6 +274,7 @@ master.controller('cart', function($scope, $http, $resource, $rootScope){
 		$scope.order = response.data
 		console.log(response.data)
 	})
+
 });
 
 master.controller('home', function($scope, $rootScope){

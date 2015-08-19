@@ -9,21 +9,22 @@
 
 	input(ng-model="search", placeholder="Search Orders")
 
-	div(ng-show="orders")
-		h2 Orders:
+	div
+		h1 Orders:
 
 		div.location-container(ng-repeat="order in orders | filter:search")
-			h6 {{order.date}}
+			h5 {{order.date}}
 			div(ng-repeat="quote in order.quote")
-				h4 {{quote.name}}
+				h3 {{quote.name}}
+				h5 {{quote.shirts}} {{quote.shirtStyle}}
 				div(ng-repeat="location in quote.locations")
 					h5 {{location.colors}} color, {{location.color}} {{location.locationName}} print.
-				h6 {{quote.price | currency}}
+				h5 {{quote.price | currency}}
 
 			.right-side
 				.top-right
 					h5 Order status: {{order.status}}
-				button.btn.btn-danger.btn-sm(ng-click="deleteOrder()") CANCEL ORDER
+				button.btn.btn-danger.btn-sm(ng-click="deleteOrder(order, $index)") DELETE ORDER
 			
 			
 

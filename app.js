@@ -64,7 +64,9 @@ app.get('/api/getUserOrder', apiController.getUserOrder);
 
 app.get('/api/getHomeOrder', apiController.getHomeOrder);
 
-app.post('/api/delete', apiController.delete);
+app.delete('/api/delete/:id', apiController.deleteOrder);
+
+app.delete('/api/deletemaster/:id', apiController.deleteMasterOrder);
 
 app.use(passportConfig.ensureAuthenticated);
 
