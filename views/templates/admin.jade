@@ -9,11 +9,11 @@
 
 	h1 All Orders:
 
-	div.location-container(ng-repeat="order in orders | filter:search")
+	div.location-container(ng-repeat="order in orders | filter:search | orderBy:'date'")
 		h3 {{order.user.username}}
 		h5 {{order.user.email}}
 		h5 {{order.user.phonenumber}}
-		h5 {{order.date}}
+		h5 {{order.dateShown}}
 		div(ng-repeat="quote in order.quote")
 			h3 {{quote.name}}
 			h5 {{quote.shirts}} {{quote.shirtStyle}}
@@ -21,9 +21,18 @@
 				h5 {{location.colors}} color, {{location.locationName}} print.
 				p(ng-repeat="color in location.printColor") {{color}}
 			p {{quote.price | currency}}
-		.right-side
+
+		.right-side-admin
 			.top-right
-				h5 Order status: {{order.status}}
+
+				input(type="checkbox", ng-model="editStatus")
+
+				div(ng-show="editStatus")
+					form(ng-submit="statusChange(order, $index)")
+						select(ng-model="order.status" ng-options="option.name as option.name for option in orderStatus")
+						button(type="submit") Change Status
+
+				h5(ng-hide="editStatus") Order status: {{order.status}}
 			button.btn.btn-danger.btn-sm(ng-click="deleteMasterOrder(order, $index)") DELETE ORDER
 	hr
 

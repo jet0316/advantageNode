@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var locationsSchema = mongoose.Schema({
 	colors       : Number,
-	printColor   : String,
+	printColor   : [String],
 	artFile      : String,
 	locationName : String,
 });

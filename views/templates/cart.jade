@@ -11,7 +11,11 @@
 			h4 {{location.colors}} Color, {{location.locationName}} print.
 		h4 {{quote.price | currency}}
 	p We will send you a confirmation e-mail once we recieve your order. We will send you a bill after everything is confirmed.
-	a.cart-button(href="#/user/order.user.username")
+
+	
+	a.cart-button(ng-show="order.user.admin", href="#/admin/order.user.username")
+		.btn.btn-info.btn-sm Done
+	a.cart-button(ng-hide="order.user.admin", href="#/user/order.user.username")
 		.btn.btn-info.btn-sm Done
 
 

@@ -14,10 +14,13 @@
 	div
 		h1 Orders:
 
-		div.location-container(ng-repeat="order in orders | filter:search")
-			h5 {{order.date}}
+		div.location-container(ng-repeat="order in orders | filter:search | orderBy:'date'")
+			h5 {{order.dateShown}}
+			a(href="#/order/:{{order._id}}")
+				h1 order.name
 			div(ng-repeat="quote in order.quote")
-				h3 {{quote.name}}
+				a(href="#/order/:{{order._id}}")
+					h1 {{quote.name}}
 				h5 {{quote.shirts}} {{quote.shirtStyle}}
 				div(ng-repeat="location in quote.locations")
 					h5 {{location.colors}} color, {{location.color}} {{location.locationName}} print.

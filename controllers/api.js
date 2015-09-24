@@ -41,9 +41,13 @@ var apiController = {
 		location.forEach(function(location){
 		var color = location.colors
 			for (var i = 0; i < Pricelist.length; i++) {
+
 				if((shirts >= Pricelist[i].shirtCountLow) && (shirts <= Pricelist[i].shirtCountHigh) 
+
 					&& (color === Pricelist[i].shirtColor)){
+
 						var output = priceArr.push(Pricelist[i].shirtPrice)
+					
 						return output
 
 			
@@ -83,10 +87,11 @@ var apiController = {
 
 		console.log(req.body)
 		var newOrder = new Order({
-			quote  : req.body._id,
-			user   : req.user._id,
-			status : 'In Review',
-			date   : req.body.date
+			quote     : req.body._id,
+			user      : req.user._id,
+			status 	  : 'In Review',
+			dateShown : req.body.dateShown,
+			date      : Date.now()
 		})
 		newOrder.save(function(err, order){
 			res.send(order)
@@ -96,11 +101,18 @@ var apiController = {
 	deleteOrder : function(req, res){
 		Order.remove({ _id: req.params.id }, function(err, response) {
 			Order.find({ user : req.user._id}).populate('quote user').exec(function(err, orders){
-
     		res.send(orders);
 			})
 		});
 	},
+
+	deleteQuote : function(req, res){
+		
+		Quote.remove({ _id: req.params.id }, function(err, response) {
+			res.send(response)
+		});
+	},
+
 	deleteMasterOrder : function(req, res){
 		Order.remove({ _id: req.params.id }, function(err, response) {
 			Order.find({}).populate('quote user').exec(function(err, orders){
@@ -108,6 +120,18 @@ var apiController = {
     		res.send(orders);
 			})
 		});
+	},
+
+	updateStatus: function(req, res) {
+		console.log(req.body.status)
+		Order.update({_id: req.params.id}, {$set: {status: req.body.status}}, function(err, response){
+
+			Order.find({}).populate('quote user').exec(function(err, orders){
+
+    		res.send(orders);
+    		console.log(orders)
+			})
+		})
 	},
 }
 

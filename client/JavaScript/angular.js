@@ -1,7 +1,10 @@
 var master = angular.module('master', ['ngResource', 'ngRoute']);
 
+// this config is where you pass in your templates via ng-view in views/index.js
 master.config(function($routeProvider){
 
+// '/' is going to look like '#/' in the views and in your browser, its angulars way of passing in templates. 
+// templateUrl is the route of the template being passed through your views folder.
 	$routeProvider
 		.when('/', {
 			templateUrl : '/templates/home',
@@ -14,6 +17,7 @@ master.config(function($routeProvider){
 		.when('/user/:profileID', {
 			templateUrl : '/templates/profile',
 			controller  : 'user',
+			// resolve needs a truthy value in order to render the template
 			resolve     : {
 				message : function($rootScope, $location){
 					if($rootScope.user.email){
@@ -72,6 +76,10 @@ master.config(function($routeProvider){
 			templateUrl : '/templates/contact',
 			controller  : 'home'
 
+		})
+		.when('/order/:hid', {
+			templateUrl : '/templates/order',
+			controller  : 'order'
 		})
 		.otherwise({
 			redirectTo: '/'
@@ -134,6 +142,7 @@ master.controller('user', function($scope, $http, $rootScope){
 	$http.get('/api/getHomeOrder?id=' + $rootScope.user._id).then(function(response){
 		console.log(response)
 		$scope.orders = response.data
+		$rootScope.orders = $scope.orders
 	})
 
 	$scope.deleteOrder = function(order, index){
@@ -168,7 +177,7 @@ master.factory('orderFactory', function($http, $resource){
 	}
 });
 
-master.controller('quotes', function($scope, $location, $rootScope, $http, orderFactory){
+master.controller('quotes', function($scope, $location, $rootScope, $http, $anchorScroll, orderFactory){
 
 	$scope.options = [{name : 1, val : 1}, 
 					{name : 2, val : 2},
@@ -239,7 +248,8 @@ master.controller('quotes', function($scope, $location, $rootScope, $http, order
 	}
 
 	$scope.newOrder = function(){
-			$scope.returnQuote.date = moment().format('MMM DD YYYY')
+
+		$scope.returnQuote.dateShown = moment().format('MMM DD YYYY')
 
 		$http.post('/api/newOrder', $scope.returnQuote)
 		.then(function(response){
@@ -252,17 +262,54 @@ master.controller('quotes', function($scope, $location, $rootScope, $http, order
 		console.log('hello?', $scope.returnQuote)
 	}
 
+	$scope.undoQuote = function(){
+		console.log('hi')
+		$http.delete('/api/deleteQuote/' + $scope.returnQuote._id).then(function(response){
+			console.log(response)
+		}),
+
+		
+		// set the location.hash to the id of
+		// the element you wish to scroll to.
+		$location.hash('top');
+
+		$scope.returnQuote = {}
+
+		// call $anchorScroll()
+		$anchorScroll();
+		  
+	}
+
 });
 
 master.controller('admin', function($scope, $http){
+					
 	$http.get('/api/getOrder').
 		then(function(response){
-            $scope.orders = response.data.reverse();
+			
+            $scope.orders = response.data
 	})	
 	$scope.deleteMasterOrder = function(order, index){
 
 		console.log(order)
 		$http.delete('/api/deletemaster/'+ order._id).then(function(response){
+			$scope.orders = response.data
+		})
+	}
+
+			
+	$scope.orderStatus = [{name : 'In Review'},
+					{name : 'Ready To Start'},
+					{name : 'In Production'},
+					{name : 'Shipped'},
+					{name : 'Order Complete'}
+					]
+
+	$scope.statusChange = function(order, index){
+		console.log(order.status)
+		$http.post('/api/updateStatus/' + order._id, order)
+		.then(function(response){
+			console.log(response)
 			$scope.orders = response.data
 		})
 	}
@@ -279,6 +326,14 @@ master.controller('cart', function($scope, $http, $resource, $rootScope){
 
 master.controller('home', function($scope, $rootScope){
 	$scope.user = $rootScope.user
+});
+
+
+
+master.controller('order', function($scope, $rootScope, $routeParams){
+	console.log($routeParams)
+	$scope.user = $rootScope.user
+	$rootScope.order = $scope.order
 });
 
 

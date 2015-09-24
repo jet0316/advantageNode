@@ -1,4 +1,4 @@
-.container-fluid
+.container-fluid#top
 	.row
 		.container.col-xs-12.col-sm-offset-3.col-sm-6.col-md-offset-3.col-md-6
 
@@ -39,7 +39,7 @@
 				textarea.text-area(ngModel="quote.comments")
 
 				div.quote-button
-					button(type="submit" class="btn btn-danger submit-button") Get quote!
+					button(type="submit" class="btn btn-info submit-button") Get quote!
 											
 				hr
 
@@ -52,6 +52,8 @@
 						p {{color.printColor}}
 				p(ng-show="returnQuote") Total: {{returnQuote.price | currency}}
 				div.quote-button
+					form(ng-show="returnQuote", ng-submit="undoQuote()")
+						button(type="submit" class="btn btn-info submit-button order-button") Start Over
 					form(ng-show="returnQuote", ng-submit="newOrder()")
 						button(type="submit" class="btn btn-info submit-button order-button" value="Submit Order") Submit Order
 					

@@ -5,12 +5,13 @@ body{
 	font-family: 'Lato', sans-serif;
 	background-color: #CCCCCC;
 	background-image:url('http://shirtsup.net/wp-content/uploads/screenprinting2-copy.jpg');
-	opacity: .9;
+	/*opacity: .9;*/
     background-size: cover;
     background-color: #CCCCCC; 
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+    top: 10px;
 }
 
 .header{
@@ -187,6 +188,11 @@ button:hover {
 	bottom: 72px;
 }
 
+.right-side-admin {
+	position: relative;
+	float: right;
+	bottom: 95px;
+}
 
 
 
